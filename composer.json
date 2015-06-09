@@ -1,0 +1,14 @@
+{
+    "name": "alfredbez/buchhaltung",
+    "require": {
+        "itbz/fpdf": "^1.7",
+        "smarty/smarty": "^3.1",
+        "google/apiclient": "1.0.*@beta"
+    },
+    "authors": [
+        {
+            "name": "Alfred Bez",
+            "email": "alfred.bez@googlemail.com"
+        }
+    ]
+}

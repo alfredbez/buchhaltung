@@ -1,5 +1,5 @@
 <?php
-class pdf extends FPDF {
+class pdf extends fpdf\FPDF {
   public $printversion = false;
   public $angebot = false;
   public $posY = 130;

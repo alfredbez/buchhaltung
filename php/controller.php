@@ -1,7 +1,7 @@
 <?php
 
 /********************************/
-/*	Klassen einbinden 			
+/*	Klassen einbinden
 /*	eventuell mit Autoload ersetzen...
 /**/
 include_once(DIR_CLASSES . 'mysql.inc.php');	//	Mysql-Klasse
