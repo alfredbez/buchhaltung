@@ -1,0 +1,1 @@
+{include file="inc/beleg_form.tpl" type="Rechnung" data=$data}

@@ -1,0 +1,1 @@
+{if isset($message)}<p class="alert alert-{$messageType}">{$message}</p>{/if}

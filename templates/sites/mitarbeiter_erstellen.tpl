@@ -1,0 +1,1 @@
+{if isset($message)}<div class="alert alert-{$messageType}">{$message}</div>{/if}{include file="../inc/form.tpl" fields=$fields}
