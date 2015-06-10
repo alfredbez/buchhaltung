@@ -50,7 +50,6 @@ $(function () {
                 	var s = '<b>' + this.x + '</b><br />Rechnungen in diesem Monat: <b>' + num_rechnungen[this.points[0].point.x] + '</b><br />';
                     s += 'Umsatz: <b>' + formatNum(this.points[0].point.y) + '€</b><br />';
                     s += 'Umsatz pro Rechnung: <b>' + formatNum(this.points[1].point.y) + '€</b><br />';
-                	s += 'Gesamtumsatz: <b>' + formatNum(this.points[2].point.y) + '€</b>';
                 	return s;
                 },
                 shared: true
@@ -69,9 +68,6 @@ $(function () {
             },{
                 name: 'Durchschnittlicher Umsatz pro Rechnung',
                 data: [{$data.rechnungen.belegDurchschnittsbetrag}]
-            },{
-                name: 'Gesamtumsatz',
-                data: [{$data.rechnungen.gesamtumsatzMonatlich}]
             }]
         });
 		/* Chart Angebot */
@@ -108,7 +104,6 @@ $(function () {
                 	var s = '<b>' + this.x + '</b><br />Angebote in diesem Monat: <b>' + num_angebote[this.points[0].point.x] + '</b><br />';
                 	s += 'Umsatz: <b>' + formatNum(this.points[0].point.y) + '€</b><br />';
                 	s += 'Umsatz pro Angebot: <b>' + formatNum(this.points[1].point.y) + '€</b><br />';
-                    s += 'Gesamtumsatz: <b>' + formatNum(this.points[2].point.y) + '€</b>';
                 	return s;
                 },
                 shared: true
@@ -127,9 +122,6 @@ $(function () {
             },{
                 name: 'Durchschnittlicher Umsatz pro Angebot',
                 data: [{$data.angebote.belegDurchschnittsbetrag}]
-            },{
-                name: 'Gesamtumsatz',
-                data: [{$data.angebote.gesamtumsatzMonatlich}]
             }]
         });
     });
@@ -151,7 +143,7 @@ var lineChartData_angebote = {
 				data : [{$data_angebote}]
 			}
 		]
-		
+
 	},
 	myLine_angebote = new Chart(document.getElementById("canvas_angebote").getContext("2d")).Line(lineChartData_angebote);
 </script>

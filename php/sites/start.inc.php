@@ -5,8 +5,18 @@ function getMonth($date){
 function getYear($date){
 	return substr($date, 6);
 }
+function limitData($data, $limit = 8)
+{
+	foreach ($data as $key => $value) {
+		if(is_array($value))
+		{
+			$data[$key] = array_slice($data[$key], -1 * $limit, $limit);
+		}
+	}
+	return $data;
+}
 error_reporting(0);
-/* 
+/*
 	Folgende Dinge werden ermittelt:
 		GesamtumsatzMonatlich): Gesamtumsatz bis zu diesem Monat
 		Monatsumsatz: Umsatz, der nur in diesem Monat erzielt wurde
@@ -37,7 +47,7 @@ for ($i=0; $i < count($data['rechnungen']['labels']); $i++) {
 	$key = $data['rechnungen']['labels'][$i];
 	$data['rechnungen']['belegDurchschnittsbetrag'][$key] = $data['rechnungen']['monatsumsatz'][$key] / $data['rechnungen']['belegeProMonat'][$key];
 }
-
+$data['rechnungen'] = limitData($data['rechnungen']);
 $data['rechnungen']['labels']                   = "'" . implode("','",$data['rechnungen']['labels']) . "'";
 $data['rechnungen']['monatsumsatz']             = implode(",",$data['rechnungen']['monatsumsatz']);
 $data['rechnungen']['belegeProMonat']           = implode(",",$data['rechnungen']['belegeProMonat']);
@@ -71,6 +81,7 @@ for ($i=0; $i < count($data['angebote']['labels']); $i++) {
 	$data['angebote']['belegDurchschnittsbetrag'][$key] = $data['angebote']['monatsumsatz'][$key] / $data['angebote']['belegeProMonat'][$key];
 }
 
+$data['angebote'] = limitData($data['angebote']);
 $data['angebote']['labels']                   = "'" . implode("','",$data['angebote']['labels']) . "'";
 $data['angebote']['monatsumsatz']             = implode(",",$data['angebote']['monatsumsatz']);
 $data['angebote']['belegeProMonat']           = implode(",",$data['angebote']['belegeProMonat']);
@@ -78,5 +89,5 @@ $data['angebote']['belegDurchschnittsbetrag'] = implode(",",$data['angebote']['b
 $data['angebote']['gesamtumsatzMonatlich']    = implode(",",$data['angebote']['gesamtumsatzMonatlich']);
 $data['angebote']['gesamtumsatz']             = number_format( $data['angebote']['gesamtumsatz'] ,2,',','.')." €";
 
-$smarty->assign('data',$data);
+$smarty->assign('data', $data);
 ?>
