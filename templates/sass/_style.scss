@@ -109,17 +109,13 @@ table.table a.btn {
 #skonto {
   display: none; }
 
-.article textarea {
-  width: 235px;
-  height: 140px;
-  word-wrap: normal; }
-
 .article {
   padding-bottom: 15px;
   margin-bottom: 15px;
   border-bottom: 1px solid rgba(100, 100, 100, 0.2);
   textarea {
-    width: 235px;
+    width: 100%;
+    height: 140px;
     word-wrap: normal;
   }
 }
