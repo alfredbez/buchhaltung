@@ -16,6 +16,7 @@ if($res['converted'] > 0){
 }
 else{
 	$error = true;
+	$errMes = 'not converted';
 }
 if(mysql_error() !== ''){
 	$error = true;

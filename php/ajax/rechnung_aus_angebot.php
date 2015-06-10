@@ -7,6 +7,8 @@ include_once(DIR_PHP_SKRIPTS . 'controller.php');
 $id = mysql_real_escape_string($_GET['id']);
 $heute = date("d.m.Y",time());
 
+$error = false;
+
 /* Informationen aus Angebot auslesen */
 $sql = "select * from angebote where angebotsnummer=" . $id;
 $db->query($sql);
