@@ -35,7 +35,6 @@ $light-border:#989898;
 }
 
 /*  Includes */
-@include animate;
 .navbar li {
   @include transition;
   &:hover { background: $light-bg; }
@@ -45,12 +44,12 @@ $light-border:#989898;
 table.dataTable{
   tbody{
     tr{
-      &.odd    { 
-        background-color: lighten( $light-bg , 10% ); 
+      &.odd    {
+        background-color: lighten( $light-bg , 10% );
         td.sorting_1 { background-color: darken( $light-bg , 1% ); }
       }
-      &.even   { 
-        background-color: $light-bg; 
+      &.even   {
+        background-color: $light-bg;
         td.sorting_1 { background-color: darken( $light-bg , 5% ); }
       }
       &:hover  {
@@ -118,15 +117,15 @@ table.table a.btn {
 .article {
   padding-bottom: 15px;
   margin-bottom: 15px;
-  border-bottom: 1px solid rgba(100, 100, 100, 0.2); 
+  border-bottom: 1px solid rgba(100, 100, 100, 0.2);
   textarea {
     width: 235px;
-    word-wrap: normal; 
+    word-wrap: normal;
   }
 }
 input.input-error,textarea.input-error,div.input-error > div.highlight{
     border: 1px solid #f00 !important;
-    @include animation(shake); 
+    @include animation(shake);
 }
 /* Material */
 html body form.collapseForm {
@@ -137,3 +136,6 @@ html body form.collapseForm {
     height: auto;
 }
 /* ENDE Material */
+body .navbar .brand {
+  margin-left: 20px;
+}
