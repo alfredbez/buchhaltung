@@ -15,7 +15,7 @@ define('DIR_LIBS' , ROOT_DIR . 'libs/');
 define('DIR_PHP_SKRIPTS' , ROOT_DIR . 'php/');
 define('DIR_SITES' , DIR_PHP_SKRIPTS . 'sites/');
 define('DIR_CLASSES' , DIR_PHP_SKRIPTS . 'classes/');
-define("FPDF_FONTPATH","vendor/itbz/fpdf/src/fpdf/font/");
+define("FPDF_FONTPATH", ROOT_DIR . "vendor/itbz/fpdf/src/fpdf/font/");
 
 $errorsite = 'error';
 
