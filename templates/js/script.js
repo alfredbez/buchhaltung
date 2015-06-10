@@ -8,6 +8,7 @@ $(document).ready(function() {
     formData,
     fehlerMeldung,
     action,
+    lieferdatum,
     id, // Wenn ein Angebot in eine Rechnung umgewandelt wird, muss die Angebotsnummer mitgegeben werden. Sie steht in 'id'
     edit = $('#edit').length,
         addFehlerMeldung = function(meldung, link) {
@@ -515,6 +516,29 @@ $(document).ready(function() {
     });
     /* Rechnung aus Angebot erstellen  */
     $('body').on('click', '#rechnung_aus_angebot', function() {
+
+        var dateRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+        var placeholderFormat = "TT.MM.JJJJ";
+        lieferdatum = prompt("Lieferdatum:", placeholderFormat);
+
+        if(lieferdatum === placeholderFormat)
+        {
+            lieferdatum = '';
+        }
+
+        if(!lieferdatum.match(dateRegex) && lieferdatum !== ''){
+            alert('Die Eingabe ' + lieferdatum + ' ist kein gültiges Datum'
+                    + 'im Format ' + placeholderFormat);
+            return false;
+        }
+        if(lieferdatum === '')
+        {
+            if(confirm('Soll das im Angebot angegebene Lieferdatum verwendet werden?'))
+            {
+                lieferdatum = 'ausAngebot';
+            }
+        }
+
         var content = '';
         id = $(this).attr('data-id');
         $('#angebotModal').modal('hide');
@@ -536,7 +560,7 @@ $(document).ready(function() {
     $('#rechnung_aus_angebotModal').on('shown', function() {
         /* Erst wenn das Modal angezeigt wird, sollen die Daten gesendet werden */
         $.ajax({
-            url: 'php/ajax/rechnung_aus_angebot.php?id=' + id,
+            url: 'php/ajax/rechnung_aus_angebot.php?id=' + id + '&lieferdatum=' + lieferdatum,
             success: function(data) {
                 /*  Progressbar aktualisieren   */
                 $('.progress .bar').css('width', '10%');

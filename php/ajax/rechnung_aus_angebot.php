@@ -7,12 +7,19 @@ include_once(DIR_PHP_SKRIPTS . 'controller.php');
 $id = mysql_real_escape_string($_GET['id']);
 $heute = date("d.m.Y",time());
 
+$lieferdatum = mysql_real_escape_string($_GET['lieferdatum']);
+
 $error = false;
 
 /* Informationen aus Angebot auslesen */
 $sql = "select * from angebote where angebotsnummer=" . $id;
 $db->query($sql);
 $angebotData = $db->fetchRow();
+
+if($lieferdatum === 'ausAngebot')
+{
+	$lieferdatum = $angebotData['lieferdatum'];
+}
 /* Daten in Tabelle rechnungen schreiben */
 $sql = "INSERT INTO rechnungen (
 		kundennummer,
@@ -32,7 +39,7 @@ $sql = "INSERT INTO rechnungen (
 	VALUES(
 		{$angebotData['kundennummer']},
 		'{$heute}',
-		'{$angebotData['lieferdatum']}',
+		'{$lieferdatum}',
 		'{$angebotData['ueberschrift']}',
 		'{$angebotData['zahlungsart']}',
 		'" . c2d($angebotData['skonto_prozente']) . "',
