@@ -83,10 +83,13 @@ $db = new DB_MySQL($mysqlhost, $mysqldb, $mysqluser, $mysqlpwd);
 /********************************************/
 include_once(DIR_PHP_SKRIPTS . 'getInfoDB.inc.php');
 
-if($hiddenSite){
-	include_once(DIR_SITES . '0' . $site . '.inc.php');	//	Seite einbinden
-}
-else{
-	include_once(DIR_SITES . $site . '.inc.php');	//	Seite einbinden
+if(basename(getcwd()) !== 'ajax')
+{
+	if($hiddenSite){
+		include_once(DIR_SITES . '0' . $site . '.inc.php');	//	Seite einbinden
+	}
+	else{
+		include_once(DIR_SITES . $site . '.inc.php');	//	Seite einbinden
+	}
 }
 ?>
