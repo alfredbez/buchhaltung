@@ -2,7 +2,9 @@
 define('ROOT_DIR',dirname(__FILE__) . '/');
 
 $localIps = array('192.168.56.1', '127.0.0.1', '::1');
-if( in_array($_SERVER['REMOTE_ADDR'], $localIps) ){
+$env = in_array($_SERVER['REMOTE_ADDR'], $localIps) ? 'local' : 'remote';
+
+if( $env === 'local' ){
 	define('WEB_ROOT','/igor/');
 }
 else{
