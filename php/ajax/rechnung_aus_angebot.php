@@ -39,10 +39,10 @@ $sql = "INSERT INTO rechnungen (
 		'{$angebotData['skonto_datum']}',
 		'{$angebotData['abschlag_datum']}',
 		'" . c2d($angebotData['abschlag_summe']) . "',
-		'',
-		'',
-		0,
-		''
+		'{$angebotData['text_oben']}',
+		'{$angebotData['text_unten']}',
+		" . c2d($angebotData['betrag']) . ",
+		'{$angebotData['endbetrag_typ']}'
 	)";
 $db->query($sql);
 if($db->affected() < 0)
