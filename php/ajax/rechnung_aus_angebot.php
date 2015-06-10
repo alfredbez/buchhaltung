@@ -21,7 +21,11 @@ $sql = "INSERT INTO rechnungen (
 		skonto_prozente,
 		skonto_datum,
 		abschlag_datum,
-		abschlag_summe
+		abschlag_summe,
+		text_oben,
+		text_unten,
+		betrag,
+		endbetrag_typ
 	)
 	VALUES(
 		{$angebotData['kundennummer']},
@@ -32,9 +36,20 @@ $sql = "INSERT INTO rechnungen (
 		'" . c2d($angebotData['skonto_prozente']) . "',
 		'{$angebotData['skonto_datum']}',
 		'{$angebotData['abschlag_datum']}',
-		'" . c2d($angebotData['abschlag_summe']) . "'
+		'" . c2d($angebotData['abschlag_summe']) . "',
+		'',
+		'',
+		0,
+		''
 	)";
 $db->query($sql);
+if($db->affected() < 0)
+{
+	$result = array(
+		'status' 	=> 'error',
+		'extra'		=>	mysql_error()
+		);
+}
 $rechnungsnummer = mysql_insert_id();
 /* Positionen aktualisieren */
 $sql = "update positionen set rechnungID=" . $rechnungsnummer . " where angebotID=" . $id;
@@ -48,17 +63,20 @@ if(mysql_error() !== ''){
 	$errMes = mysql_error();
 }
 
-if(!$error){
-	$result = array(
-		'status' 	=> 'success',
-		'extra'		=>	$rechnungsnummer
-		);
-}
-else{
-	$result = array(
-		'status' 	=> 'error',
-		'extra'		=>	$errMes
-		);
+if(!isset($result))
+{
+	if(!$error){
+		$result = array(
+			'status' 	=> 'success',
+			'extra'		=>	$rechnungsnummer
+			);
+	}
+	else{
+		$result = array(
+			'status' 	=> 'error',
+			'extra'		=>	$errMes
+			);
+	}
 }
 echo json_encode($result);
 ?>
