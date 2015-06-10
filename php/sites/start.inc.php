@@ -25,6 +25,13 @@ function limitData($data, $limit = 8)
 */
 $sql = "select betrag,rechnungsdatum from rechnungen";
 $db->query($sql);
+$data['rechnungen'] = [
+  'labels' => [],
+  'gesamtumsatz' => 0,
+  'monatsumsatz' => [],
+  'gesamtumsatzMonatlich' => [],
+  'belegeProMonat' => [],
+];
 while($row = $db->fetchRow()){
 
 	$year = getYear( $row['rechnungsdatum'] );
@@ -36,6 +43,14 @@ while($row = $db->fetchRow()){
 		$labels_rechnungen[]=$key;
 		$data['rechnungen']['labels'][] = $key;
 	}
+
+  if(!isset($data['rechnungen']['monatsumsatz'][$key])) {
+    $data['rechnungen']['monatsumsatz'][$key] = 0;
+  }
+
+  if(!isset($data['rechnungen']['belegeProMonat'][$key])) {
+    $data['rechnungen']['belegeProMonat'][$key] = 0;
+  }
 
 	$data['rechnungen']['gesamtumsatz']                += $row['betrag'];
 	$data['rechnungen']['monatsumsatz'][$key]          += $row['betrag'];
@@ -58,6 +73,13 @@ $data['rechnungen']['gesamtumsatz']             = number_format( $data['rechnung
 /* Umsatz pro Monat ermitteln (Angebote) */
 $sql = "select betrag,angebotsdatum from angebote";
 $db->query($sql);
+$data['angebote'] = [
+  'labels' => [],
+  'gesamtumsatz' => 0,
+  'monatsumsatz' => [],
+  'gesamtumsatzMonatlich' => [],
+  'belegeProMonat' => [],
+];
 while($row = $db->fetchRow()){
 
 	$year = getYear( $row['angebotsdatum'] );
@@ -69,6 +91,14 @@ while($row = $db->fetchRow()){
 		$labels_angebote[]=$key;
 		$data['angebote']['labels'][] = $key;
 	}
+
+  if(!isset($data['angebote']['monatsumsatz'][$key])) {
+    $data['angebote']['monatsumsatz'][$key] = 0;
+  }
+
+  if(!isset($data['angebote']['belegeProMonat'][$key])) {
+    $data['angebote']['belegeProMonat'][$key] = 0;
+  }
 
 	$data['angebote']['gesamtumsatz']                += $row['betrag'];
 	$data['angebote']['monatsumsatz'][$key]          += $row['betrag'];
