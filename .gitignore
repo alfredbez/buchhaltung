@@ -3,3 +3,4 @@ mysql_config.php
 templates_c
 templates/css
 node_modules
+php/ajax/debug.txt
