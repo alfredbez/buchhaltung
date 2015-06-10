@@ -621,7 +621,7 @@ $(document).ready(function() {
                 buttonsHtml += '<a href="export/angebot/' + id + '.pdf" target="_blank" class="btn btn-primary"><i class="icon-eye-open icon-white"></i> Öffnen</a>';
                 buttonsHtml += '<a href="export/angebot/print/' + id + '.pdf" target="_blank" class="btn"><i class="icon-print"></i> Druckversion öffnen</a>';
                 buttonsHtml += '<a href="index.php?site=angebot_bearbeiten&id=' + id + '" class="btn"><i class="icon-edit"></i> Bearbeiten</a>';
-                if (!json.status === 'success') {
+                if (json.status !== 'success') {
                     buttonsHtml += '<a href="#" id="rechnung_aus_angebot" data-id="' + id + '" class="btn"><i class="icon-file"></i> Rechnung erstellen</a>';
                 }
                 buttonsHtml += '<a href="#" id="delete" data-type="angebot" data-id="' + id + '" class="btn btn-danger"><i class="icon-trash icon-white"></i> Löschen</a>';
