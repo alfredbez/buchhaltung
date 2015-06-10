@@ -15,7 +15,7 @@ function limitData($data, $limit = 8)
 	}
 	return $data;
 }
-error_reporting(0);
+
 /*
 	Folgende Dinge werden ermittelt:
 		GesamtumsatzMonatlich): Gesamtumsatz bis zu diesem Monat

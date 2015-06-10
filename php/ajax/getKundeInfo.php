@@ -7,7 +7,7 @@
 include_once('../../config.php');
 include_once(DIR_PHP_SKRIPTS . 'controller.php');
 
-//error_reporting(0);
+//
 
 $id = mysql_real_escape_string($_GET['id']);
 

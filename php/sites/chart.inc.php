@@ -5,8 +5,8 @@ function getMonth($date){
 function getYear($date){
 	return substr($date, 6);
 }
-error_reporting(0);
-/* 
+
+/*
 	Folgende Dinge werden ermittelt:
 		GesamtumsatzMonatlich): Gesamtumsatz bis zu diesem Monat
 		Monatsumsatz: Umsatz, der nur in diesem Monat erzielt wurde

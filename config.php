@@ -11,6 +11,16 @@ else{
   define('WEB_ROOT','/neu/');
 }
 
+if( $env === 'local' )
+{
+  ini_set('display_errors','On');
+  error_reporting(E_ALL);
+}
+else
+{
+  error_reporting(0);
+}
+
 define('DIR_LIBS' , ROOT_DIR . 'libs/');
 define('DIR_PHP_SKRIPTS' , ROOT_DIR . 'php/');
 define('DIR_SITES' , DIR_PHP_SKRIPTS . 'sites/');

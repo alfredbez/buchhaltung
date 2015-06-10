@@ -8,7 +8,7 @@
 include_once('../classes/mysql.inc.php');
 include_once('../../config.php');
 
-error_reporting(0);
+
 
 /*	Mit der Datenbank verbinden	*/
 $db = new DB_MySQL($mysqlhost, $mysqldb, $mysqluser, $mysqlpwd);

@@ -8,7 +8,7 @@
 include_once('../classes/mysql.inc.php');
 include_once('../../config.php');
 
-error_reporting(0);
+
 
 $id = mysql_real_escape_string($_GET['id']);
 

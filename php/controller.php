@@ -78,9 +78,6 @@ $smarty->assign('content','');
 /*	Mit der Datenbank verbinden	*/
 $db = new DB_MySQL($mysqlhost, $mysqldb, $mysqluser, $mysqlpwd);
 
-error_reporting(0);
-error_reporting(-1);
-
 /********************************************/
 /*	Informationen aus Datenbank lesen		*/
 /********************************************/

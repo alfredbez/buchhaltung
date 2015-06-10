@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 
 /*	Angebotsinformationen auslesen	*/
 $db->query("select * from angebote where angebotsnummer=" . $_GET['id']);

@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 
 /*	Rechnungsinformationen auslesen	*/
 $db->query("select * from rechnungen where rechnungsnummer=" . $_GET['id']);
