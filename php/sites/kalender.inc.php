@@ -89,27 +89,21 @@ if ($client->getAccessToken()) {
 	);
 	/* Formular auswerten */
 	if(isset($_GET['eintragen'])){
-		if(1==2){
-			$message = 'Termin wurde erfolgreich ' . $db_info['einstellungen']['kalender_id'] . ' eingetragen!';
+		$event = new Google_Event();
+		/* Titel setzen	*/
+		$event->setSummary($_POST['name']);
+		$start = new Google_EventDateTime();
+		/* Startzeit setzen	*/
+		$start->setDateTime($_POST['start-date'] . 'T' . $_POST['start-time'] . ':00.000+01:00');
+		$event->setStart($start);
+		$end = new Google_EventDateTime();
+		$end->setDateTime($_POST['end-date'] . 'T' . $_POST['end-time'] . ':00.000+01:00');
+		$event->setEnd($end);
+		/* Event erstellen	*/
+		$createdEvent = $cal->events->insert($db_info['einstellungen']['kalender_id'], $event);
+		if($createdEvent !== NULL){
+			$message = 'Termin wurde erfolgreich eingetragen!';
 			$messageType = 'success';
-		}
-		else{
-			$event = new Google_Event();
-			/* Titel setzen	*/
-			$event->setSummary($_POST['name']);
-			$start = new Google_EventDateTime();
-			/* Startzeit setzen	*/
-			$start->setDateTime($_POST['start-date'] . 'T' . $_POST['start-time'] . ':00.000+01:00');
-			$event->setStart($start);
-			$end = new Google_EventDateTime();
-			$end->setDateTime($_POST['end-date'] . 'T' . $_POST['end-time'] . ':00.000+01:00');
-			$event->setEnd($end);
-			/* Event erstellen	*/
-			$createdEvent = $cal->events->insert($db_info['einstellungen']['kalender_id'], $event);
-			if($createdEvent !== NULL){
-				$message = 'Termin wurde erfolgreich eingetragen!';
-				$messageType = 'success';
-			}
 		}
 	}
 	/* Event löschen */
