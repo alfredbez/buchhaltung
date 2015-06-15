@@ -1,38 +1,3 @@
-{*
-(
-    [0] => Array
-        (
-            [rechnungsnummer] => 11926
-            [kundennummer] => 13733
-            [rechnungsdatum] => 22.04.2013
-            [lieferdatum] => 22.04.2013
-            [ueberschrift] => sdfdf
-            [zahlungsart] => sofort
-            [skonto_prozente] => 2
-            [skonto_datum] => 
-            [abschlag_summe] => 0
-            [abschlag_datum] => 
-            [text_oben] => 
-            [text_unten] => 
-        )
-
-    [1] => Array
-        (
-            [0] => Array
-                (
-                    [id] => 102
-                    [name] => sdfsdf
-                    [menge] => 1
-                    [einheit] => Stück
-                    [preis] => 20
-                    [angebotID] => 0
-                    [rechnungID] => 11926
-                )
-
-        )
-
-) 
-*}
 {* wenn eine Rechnung / ein Angebot erstellt wird, ist $data nicht gesetzt. Da alle Felder im fieldset 'Artikel' aber erst durch eine foreach-Schleife über $data erzeugt werden, würde es hier gar keine Felder geben. Ein Workaround ist hier einfach ein Array $data anzulegen, dass zwei Werte beinhaltet, wobei der zweite Wert ein Array ist *}
 {if !isset($data)}{assign var=data value=[NULL,[NULL]]}{/if}
 <form action="index.php?site={$smarty.get.site}" method="post" id="createPDF" class="form-horizontal">
