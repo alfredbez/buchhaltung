@@ -674,10 +674,42 @@ $(document).ready(function() {
             submit: 'OK'
         }).trigger("focus");
     });
-    /*  Datensatz löschen   */
-    $('body').on('click', '.delete', function() {
-        var row = $(this).closest('tr'),
-            name = row.find('td:nth-child(3)').text() + ' ' + row.find('td:nth-child(4)').text();
+    var showModalFunction = {
+        "base": function(data) {
+            $('#deleteModalLabel').text(data.heading);
+            $('#name').text(data.name);
+            $('#deleteModal').modal('show');
+            $('#sure').click(function() {
+                $.ajax({
+                    url: "php/ajax/" + data.script + ".php?id=" + data.id
+                }).done(function() {
+                    data.row.fadeOut(1000, function() {
+                        data.row.remove();
+                    });
+                });
+            });
+        },
+        "kunden": function(row) {
+            this["base"]({
+                heading: 'Diesen Kunden wirklich löschen?',
+                name: row.find('td:nth-child(3)').text() + ' ' + row.find('td:nth-child(4)').text(),
+                script: 'deleteKunde',
+                id: row.find('td:nth-child(1)').text(),
+                row: row
+            });
+        },
+        "textvorlagen": function(row){
+            this["base"]({
+                heading: 'Diese Textvorlage wirklich löschen?',
+                name: row.find('td:nth-child(2)').text(),
+                script: 'deleteTextvorlage',
+                id: row.find('td:nth-child(1)').text(),
+                row: row
+            });
+        }
+    };
+    var showDeleteKundeModal = function(row){
+        var name = row.find('td:nth-child(3)').text() + ' ' + row.find('td:nth-child(4)').text();
 
         $('#deleteModalLabel').text('Diesen Kunden wirklich löschen?');
         $('#name').text(name);
@@ -692,6 +724,13 @@ $(document).ready(function() {
                 });
             });
         });
+    };
+    /*  Datensatz löschen   */
+    $('body').on('click', '.delete', function() {
+        var tableId = $('.dataTable').attr('id');
+        var row = $(this).closest('tr');
+
+        showModalFunction[tableId](row);
     });
     /*  Details anzeigen   */
     $('body').on('click', '.details', function() {

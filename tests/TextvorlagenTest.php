@@ -51,6 +51,17 @@ class TextvorlagenTest extends AbstractSeleniumTest {
   }
 
   /** @test */
+  public function it_deletes()
+  {
+      $this->insertTextvorlage()
+           ->visit('index.php?site=textvorlagen_uebersicht')
+           ->findByNameOrId('delete')->click();
+      $this->wait(500)->findByNameOrId('#sure')->click();
+      $this->visit('index.php?site=textvorlagen_uebersicht')
+           ->see('Keine Einträge vorhanden.');
+  }
+
+  /** @test */
   public function it_does_print_error_if_there_are_no_updates()
   {
       $this->insertTextvorlage()

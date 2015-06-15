@@ -25,7 +25,7 @@
   				<td{if isset($inlineedit)} class="edit"{/if}>{$col}</td>
   			{/foreach}
   			{if isset($deleteaction)}
-  				<td><button class="btn btn-mini btn-danger delete"><i class="icon-trash icon-white"></i></button></td>
+  				<td><button name="delete" class="btn btn-mini btn-danger delete"><i class="icon-trash icon-white"></i></button></td>
   			{/if}
   			{if isset($showdetails)}
   				<td><button class="btn btn-mini details"><i class="icon-eye-open"></i></button></td>
