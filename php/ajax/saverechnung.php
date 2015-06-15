@@ -6,6 +6,7 @@ include_once(DIR_PHP_SKRIPTS . 'controller.php');
 $angebotID = 0;
 $rechnungID = 0;
 $error = false;
+$errMes = '';
 
 foreach($_POST as $k=>$v){
 	$$k=$v;
@@ -61,7 +62,8 @@ $insertRechnungSQL .= "
 		text_unten,
 		abschlag_datum,
 		abschlag_summe,
-		endbetrag_typ
+		endbetrag_typ,
+		betrag
 	)
 	VALUES(";
 
@@ -81,7 +83,8 @@ $insertRechnungSQL .= "
 		'$text_unten',
 		'$abschlagsdatum',
 		'" . c2d($abschlagssumme) . "',
-		'$endbetrag_typ'
+		'$endbetrag_typ',
+		0
 	)";
 $db->query($insertRechnungSQL);
 if(mysql_error() !==''){
