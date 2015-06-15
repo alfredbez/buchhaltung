@@ -10,5 +10,8 @@
             "name": "Alfred Bez",
             "email": "alfred.bez@googlemail.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "laracasts/integrated": "^0.15.6"
+    }
 }
