@@ -29,19 +29,6 @@ if($rechnungsnummer !== ''){
 	}
 }
 
-/*
-//	DEBUG 
-print_r($_POST);
-die('');	
-$result = array(
-	'status' 	=> 'success',
-	'extra'		=>	11906
-	);
-die(json_encode($result));
- */
-
-
-
 /*	Allgemeine Rechnungsinfos speichern	*/
 
 $insertRechnungSQL = "INSERT INTO rechnungen (";
