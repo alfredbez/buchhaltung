@@ -8,12 +8,21 @@ class KundeTest extends WithKundeTest {
   public function it_creates_kunde()
   {
       $this->createKunde()
-           ->snap()
            ->seePageIs('index.php?site=neuer_Kunde')
-           ->snap()
            ->see('Der Kunde wurde erfolgreich hinzugefügt!')
            ->visit('index.php?site=kundenuebersicht')
            ->see($this->data['type']['vorname']);
+  }
+
+  /** @test */
+  public function it_doesnt_create_empty_kunde()
+  {
+      $data = ['type' => [], 'select' => []];
+      $this->createKunde($data)
+           ->seePageIs('index.php?site=neuer_Kunde')
+           ->see('Bitte gib einen Titel, Vorname oder Nachnamen ein!')
+           ->visit('index.php?site=kundenuebersicht')
+           ->see('Keine Einträge vorhanden.');
   }
 
 }

@@ -22,13 +22,14 @@ abstract class WithKundeTest extends AbstractSeleniumTest {
     ],
   ];
 
-  protected function createKunde ()
+  protected function createKunde ($data = false)
   {
+    $data = $data ?: $this->data;
     $t = $this->visit('index.php?site=neuer_Kunde');
-    foreach ($this->data['type'] as $key => $value) {
+    foreach ($data['type'] as $key => $value) {
       $t = $t->type($value, $key);
     }
-    foreach ($this->data['select'] as $key => $value) {
+    foreach ($data['select'] as $key => $value) {
       $t = $t->select($key, $value);
     }
     $t->press('Speichern');
