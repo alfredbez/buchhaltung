@@ -11,6 +11,7 @@ class DB_MySQL {
     $this->connection = mysql_connect($host,$user,$pass,TRUE) or die('Datenbankverbindung fehlgeschlagen');
   	mysql_select_db($database, $this->connection) or die('Konnte Datenbank "' . $database . '" nicht auswählen');
     $this->query("SET NAMES utf8");
+    $this->query("SET SESSION sql_mode = 'TRADITIONAL'");
   }
 
   public function disconnect() {
