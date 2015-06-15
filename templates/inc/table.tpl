@@ -10,9 +10,12 @@
   			{if isset($deleteaction)}
   				<th>&nbsp;</th>
   			{/if}
-  			{if isset($showdetails)}
-  				<th>&nbsp;</th>
-  			{/if}
+        {if isset($showdetails)}
+          <th>&nbsp;</th>
+        {/if}
+  			{if isset($showDetailPage)}
+          <th>&nbsp;</th>
+        {/if}
   		</tr>
   	</thead>
   	<tbody>
@@ -27,6 +30,9 @@
   			{if isset($showdetails)}
   				<td><button class="btn btn-mini details"><i class="icon-eye-open"></i></button></td>
   			{/if}
+        {if isset($showDetailPage)}
+          <td><a href="index.php?site={$showDetailPage}&id={$row.id}" class="btn btn-mini"><i class="icon-edit"></i></a></td>
+        {/if}
   		</tr>
   		{/foreach}
   	</tbody>

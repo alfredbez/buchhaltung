@@ -15,6 +15,12 @@ trait TestTrait {
     self::lock();
   }
 
+  public function getSnapPath()
+  {
+    $extra = date('Y-m-d-H-i') . '-' . uniqid();
+    return "./tests/logs/screenshot-$extra.png";
+  }
+
   public static function tearDownAfterClass()
   {
     parent::tearDownAfterClass();
@@ -30,5 +36,5 @@ trait TestTrait {
   {
     return unlink( self::$lockfile );
   }
-  
+
 }

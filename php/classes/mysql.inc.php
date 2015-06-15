@@ -20,10 +20,14 @@ class DB_MySQL {
   }
 
   public function query($query) {
-  	$this->queries[] = $query;
+    $this->queries[] = $query;
 
-  	$this->result=mysql_query($query,$this->connection);
-  	$this->counter=NULL;
+    $this->result=mysql_query($query,$this->connection);
+    $this->counter=NULL;
+  }
+
+  public function getLastQuery() {
+  	return array_slice($this->queries, -1)[0];
   }
 
   public function fetchRow() {

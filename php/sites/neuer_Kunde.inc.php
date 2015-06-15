@@ -51,6 +51,7 @@ if(isset($_POST['vorname'])){
 			$success=true;
 		}
 		else{
+			// @TODO: use $db->getLastQuery() instead of $db->queries[1]
 			$message="Es ist ein Fehler aufgetreten! " . mysql_error() ."<br />".$db->queries[1];
 			$success=false;
 		}

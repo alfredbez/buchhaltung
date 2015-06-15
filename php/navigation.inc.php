@@ -27,6 +27,10 @@ $sites = array(
 		'ansehen'   => 'mitarbeiter_uebersicht',
 		'erstellen' => 'mitarbeiter_erstellen'
 	),
+	'Textvorlagen' => [
+		'ansehen' 	=> 'textvorlagen_uebersicht',
+		'erstellen' => 'textvorlagen_erstellen',
+	],
 	'Kalender' => 'kalender',
 	'Einstellungen' => 'einstellungen'
 	);
