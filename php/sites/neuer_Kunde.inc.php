@@ -1,5 +1,5 @@
 <?php
-if(isset($_POST['send'])){
+if(isset($_POST['vorname'])){
 	foreach($_POST as $k=>$v){
 		$$k=mysql_real_escape_string($v);
 	}
@@ -45,6 +45,6 @@ if(isset($_POST['send'])){
 		$message="Es ist ein Fehler aufgetreten! " . mysql_error() ."<br />".$db->queries[1];
 		$success=false;
 	}
-	$smarty->assign('message',$message);
-	$smarty->assign('success',$success);
+  $smarty->assign('message',$message);
+  $smarty->assign('success',$success);
 }
