@@ -5,6 +5,7 @@ require_once 'Traits/WithDatabase.php';
 require_once 'Traits/WithTextvorlagen.php';
 require_once 'php/classes/pdf.inc.php';
 require_once 'php/classes/rechnung.inc.php';
+require_once 'php/classes/angebot.inc.php';
 
 abstract class BelegTest extends WithKundeTest {
 
