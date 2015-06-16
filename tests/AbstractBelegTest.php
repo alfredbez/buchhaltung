@@ -186,7 +186,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
          ->clickCss("button#save")
          ->waitForElement('info-pdfprint')
          ->snap()
-         ->wait(500)
+         ->wait(1000)
          ->seeFile(ROOT_DIR . "export/{$this->type}/1.pdf")
          ->verifyInDatabase( $this->mainTable ,[
             'text_oben' => $this->textvorlagenData['text'],
@@ -200,37 +200,30 @@ abstract class AbstractBelegTest extends WithKundeTest {
   /** @test */
   public function it_creates_beleg()
   {
-    $this->createKundeViaQuery();
-
-    $this->db()->query($this->buildBelegSqlQuery());
-    $this->verifyInDatabase( $this->mainTable , $this->dummyBelegData);
-
-    $this->dummyArtikelData[ $this->positionenIdField ] = mysql_insert_id();
-
-    for ($i=0; $i < count($this->dummyArtikelData['name']); $i++) {
-      $this->db()->query($this->buildArticleSqlQuery($i));
-    }
-
-    $this->verifyInDatabase('positionen', [
-      $this->positionenIdField => $this->dummyArtikelData[$this->positionenIdField],
-      'name' => $this->dummyArtikelData['name'][0],
-      'menge' => $this->dummyArtikelData['amount'][0],
-      'preis' => $this->dummyArtikelData['preis'][0],
-    ]);
-
-    $belegData = $this->generatePdf();
-
-    $this->seeFile(ROOT_DIR . "export/{$this->type}/" .  $belegData['id'] . ".pdf");
-    $this->verifyInDatabase( $this->mainTable , [
-      $this->primaryKeyField => $belegData['id'],
-      'betrag' => $belegData['betrag'],
-    ]);
+    $this->createKundeViaQuery()
+         ->visit("index.php?site={$this->type}_erstellen")
+         ->type('1', 'kundennummer')
+         ->type('Artikelname', 'name[]')
+         ->type('1', 'amount[]')
+         ->type('10', 'preis[]')
+         ->type($this->dummyBelegDatum['value'], 'lieferdatum')
+         ->type($this->dummyBelegDatum['value'], $this->dummyBelegDatum['field'])
+         ->clickCss('input[value="sofort"]')
+         ->clickCss("button#save")
+         ->wait(1000)
+         ->seeFile(ROOT_DIR . "export/{$this->type}/1.pdf")
+         ->verifyInDatabase( $this->mainTable, ['kundennummer' => 1])
+         ->verifyInDatabase('positionen',[
+            'name' => 'Artikelname',
+            'menge' => 1,
+            'preis' => 10,
+          ])
+          ->closeBrowser();
 
     $this->visit("index.php?site={$this->mainTable}_ansehen")
          ->snap()
-         ->see('123.76') // Betrag brutto
+         ->see('11.90') // Betrag brutto
          ->see($this->dummyBelegDatum['value'])
-         ->see($this->dummyArtikelData[ $this->positionenIdField ])
          ->see($this->data['type']['vorname'] . ' ' . $this->data['type']['nachname']);
   }
 
