@@ -528,7 +528,7 @@ $(document).ready(function() {
 
         if(!lieferdatum.match(dateRegex) && lieferdatum !== ''){
             alert('Die Eingabe ' + lieferdatum + ' ist kein gültiges Datum'
-                    + 'im Format ' + placeholderFormat);
+                    + ' im Format ' + placeholderFormat);
             return false;
         }
         if(lieferdatum === '')
