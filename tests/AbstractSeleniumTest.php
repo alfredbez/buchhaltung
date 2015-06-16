@@ -8,8 +8,6 @@ require_once 'Traits/TestTrait.php';
 abstract class AbstractSeleniumTest extends IntegrationTest {
   use TestTrait, WorksWithDatabase;
 
-  protected $isMaximized = false;
-
   protected function baseUrl()
   {
     return 'http://192.168.56.101/igor';
@@ -39,17 +37,16 @@ abstract class AbstractSeleniumTest extends IntegrationTest {
     return $this;
   }
 
+  public function visit($uri)
+  {
+      parent::visit($uri);
+      $this->session->window($this->session->window_handle())->maximize();
+
+      return $this;
+  }
+
   public function snap($destination = null)
   {
-      if($this->isMaximized !== $this->session->window_handle())
-      {
-        $this->session->window($this->session->window_handle())->maximize();
-
-        $this->wait(1000);
-
-        $this->isMaximized = $this->session->window_handle();
-      }
-
       $destination = $destination ?: $this->getSnapPath();
 
       parent::snap($destination);
