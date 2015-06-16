@@ -23,8 +23,8 @@ class PageLoadTest extends AbstractTest {
   /** @test */
   public function it_loads_angebote_overview()
   {
-      $this->visit('index.php?site=angebot_ansehen')
-           ->seePageIs('index.php?site=angebot_ansehen')
+      $this->visit('index.php?site=angebote_ansehen')
+           ->seePageIs('index.php?site=angebote_ansehen')
            ->see('Angebote - ansehen');
   }
 
