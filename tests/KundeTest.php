@@ -10,7 +10,8 @@ class KundeTest extends WithKundeTest {
       $this->createKunde()
            ->seePageIs('index.php?site=neuer_Kunde')
            ->see('Der Kunde wurde erfolgreich hinzugefügt!')
-           ->visit('index.php?site=kundenuebersicht')
+           ->closeBrowser();
+      $this->visit('index.php?site=kundenuebersicht')
            ->see($this->data['type']['vorname']);
   }
 
@@ -21,7 +22,8 @@ class KundeTest extends WithKundeTest {
       $this->createKunde($data)
            ->seePageIs('index.php?site=neuer_Kunde')
            ->see('Bitte gib einen Titel, Vorname oder Nachnamen ein!')
-           ->visit('index.php?site=kundenuebersicht')
+           ->closeBrowser();
+      $this->visit('index.php?site=kundenuebersicht')
            ->see('Keine Einträge vorhanden.');
   }
 

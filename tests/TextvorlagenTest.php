@@ -46,6 +46,7 @@ class TextvorlagenTest extends AbstractSeleniumTest {
            ->visit('index.php?site=textvorlagen_uebersicht')
            ->findByNameOrId('delete')->click();
       $this->wait(500)->findByNameOrId('#sure')->click();
+      $this->closeBrowser();
       $this->visit('index.php?site=textvorlagen_uebersicht')
            ->see('Keine Einträge vorhanden.');
   }
