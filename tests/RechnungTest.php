@@ -2,12 +2,13 @@
 
 require_once 'WithKundeTest.php';
 require_once 'Traits/WithDatabase.php';
+require_once 'Traits/WithTextvorlagen.php';
 require_once 'php/classes/pdf.inc.php';
 require_once 'php/classes/rechnung.inc.php';
 
 class RechnungTest extends WithKundeTest {
 
-  use WithDatabase;
+  use WithDatabase, WithTextvorlagen;
 
   protected $dummyRechnungData = [
     "kundennummer"          => 1,
@@ -103,6 +104,43 @@ class RechnungTest extends WithKundeTest {
       'betrag' => $betrag,
       'id' => $id,
     ];
+  }
+
+  /** @test */
+  public function it_loads_textvorlagen()
+  {
+    $this->createKundeViaQuery()
+         ->insertTextvorlage()
+         ->visit('index.php?site=rechnung_erstellen')
+         ->see($this->textvorlagenData['titel'])
+         ->see($this->textvorlagenData['text']);
+  }
+
+  /** @test */
+  public function it_inserts_textvorlage()
+  {
+    $this->createKundeViaQuery()
+         ->insertTextvorlage()
+         ->visit('index.php?site=rechnung_erstellen')
+         ->type('1', 'kundennummer')
+         ->type('1', 'amount[]')
+         ->type('10', 'preis[]')
+         ->clickCss('input[value="sofort"]')
+         ->clickCss("[name='text_oben'] + button")
+         ->clickCss("[name='name[]'] + button")
+         ->clickCss("[name='text_unten'] + button")
+         ->snap()
+         ->clickCss("button#save")
+         ->waitForElement('info-pdfprint')
+         ->snap()
+         ->seeFile(ROOT_DIR . 'export/rechnung/1.pdf')
+         ->verifyInDatabase('rechnungen',[
+            'text_oben' => $this->textvorlagenData['text'],
+            'text_unten' => $this->textvorlagenData['text'],
+          ])
+         ->verifyInDatabase('positionen',[
+            'name' => $this->textvorlagenData['text'],
+          ]);
   }
 
   /** @test */

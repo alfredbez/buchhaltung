@@ -2,22 +2,11 @@
 
 require_once 'AbstractSeleniumTest.php';
 require_once 'Traits/WithDatabase.php';
+require_once 'Traits/WithTextvorlagen.php';
 
 class TextvorlagenTest extends AbstractSeleniumTest {
 
-  use WithDatabase;
-
-  protected $data = ['titel' => 'Dummy-Titel', 'text' => 'Dummy-Text'];
-
-  protected function insertTextvorlage()
-  {
-    $sql = "INSERT INTO textvorlagen (titel, text) ";
-    $sql .= "VALUES ('{$this->data['titel']}', '{$this->data['text']}')";
-
-    $this->db()->query($sql);
-
-    return $this;
-  }
+  use WithDatabase, WithTextvorlagen;
 
   /** @test */
   public function it_creates()
@@ -69,8 +58,8 @@ class TextvorlagenTest extends AbstractSeleniumTest {
                 ->clear('text')
                 ->clear('titel')
                  ->submitForm('Speichern', [
-                    'text'  => $this->data['text'],
-                    'titel' => $this->data['titel'],
+                    'text'  => $this->textvorlagenData['text'],
+                    'titel' => $this->textvorlagenData['titel'],
                   ])
                  ->snap()
                  ->see('Du hast keine neuen Angaben gemacht!');

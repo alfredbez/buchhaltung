@@ -732,6 +732,21 @@ $(document).ready(function() {
 
         showModalFunction[tableId](row);
     });
+    var insertTextvorlage = function(textvorlage, el){
+        var text = el.val();
+        if(text !== '')
+        {
+            text += ' ';
+        }
+        text += textvorlage;
+        el.val(text);
+    };
+    $('body').on('click', '.insertTextvorlage', function() {
+        var textvorlage = $('#textvorlagen option:selected').attr('data-text');
+        var el = $(this).prev('textarea');
+        insertTextvorlage(textvorlage, el);
+        return false;
+    });
     /*  Details anzeigen   */
     $('body').on('click', '.details', function() {
         var row = $(this).closest('tr'),

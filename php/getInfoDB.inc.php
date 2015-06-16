@@ -19,6 +19,11 @@ while($row = $db->fetchRow()){
 $db_info['einstellungen'] = $res;
 
 
+$db->query("SELECT * FROM textvorlagen");
+$db_info['textvorlagen'] = [];
+while($row = $db->fetchRow()){
+  $db_info['textvorlagen'][] = $row;
+}
+
 /* Informationen an Smarty weitergeben */
 $smarty->assign('db_info',$db_info);
-?>

@@ -51,5 +51,7 @@ abstract class WithKundeTest extends AbstractSeleniumTest {
     $sql .= ')';
 
     $this->db()->query($sql);
+
+    return $this;
   }
 }

@@ -21,6 +21,24 @@ abstract class AbstractSeleniumTest extends IntegrationTest {
     return $this;
   }
 
+  protected function findByCssSelector($selector)
+  {
+      try {
+          return $this->session->element('css selector', $selector);
+      } catch (NoSuchElement $e) {
+          throw new InvalidArgumentException(
+              "Couldn't find an element, matching the follwing css selector: '{$seletor}'."
+          );
+      }
+  }
+
+  public function clickCss($selector)
+  {
+    $this->findByCssSelector($selector)->click();
+
+    return $this;
+  }
+
   public function snap($destination = null)
   {
       if($this->isMaximized !== $this->session->window_handle())

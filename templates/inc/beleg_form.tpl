@@ -30,10 +30,24 @@
 			</div>
 		</div>
 	</fieldset>
+	{* Textvorlagen *}
+	<fieldset>
+		<legend>Textvorlagen</legend>
+		<select id="textvorlagen">
+			{foreach from=$db_info.textvorlagen item=textvorlage}
+			{assign var="label" value=$textvorlage.titel}
+			{if $label==""}
+				{assign var="label" value=$textvorlage.text}
+			{/if}
+			<option value="{$textvorlage.id}" data-text="{$textvorlage.text}">{$label}</option>
+			{/foreach}
+		</select>
+	</fieldset>
 	{* Text oberhalb der Artikel *}
 	<fieldset>
 		<legend>Text oberhalb der Artikel</legend>
 		<textarea class="text-beleg" name="text_oben">{$data[0].text_oben}</textarea>
+		<button class="insertTextvorlage btn">Textvorlage einfügen</button>
 	</fieldset>
 	{* Artikel *}
 	<fieldset>
@@ -49,6 +63,7 @@
 			<div class="article row-fluid">
 				<div class="span5">
 					<textarea name="name[]" cols="7">{$article.name}</textarea>
+					<button class="insertTextvorlage btn">Textvorlage einfügen</button>
 				</div>
 				<div class="span3">
 					<input type="text" name="amount[]" value="{$article.menge}" />
@@ -67,6 +82,7 @@
 	<fieldset>
 		<legend>Text unterhalb der Artikel</legend>
 		<textarea class="text-beleg" name="text_unten">{$data[0].text_unten}</textarea>
+		<button class="insertTextvorlage btn">Textvorlage einfügen</button>
 	</fieldset>
 	{* Abschlag *}
 	<fieldset>
