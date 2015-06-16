@@ -19,6 +19,41 @@ abstract class AbstractSeleniumTest extends IntegrationTest {
     return $this;
   }
 
+  public function dismissAlert()
+  {
+    try {
+        $this->session->dismiss_alert();
+    } catch (\WebDriver\Exception\NoAlertOpenError $e) {
+        throw new PHPUnitException(
+            "Well, tried to dismiss the alert, but there wasn't one. Dangit."
+        );
+    }
+
+    return $this;
+  }
+
+  public function typeInPrompt($text, $accept = true)
+  {
+    try {
+        $this->session->postAlert_text(['text' => $text]);
+    } catch (\WebDriver\Exception\NoAlertOpenError $e) {
+        throw new PHPUnitException(
+            "Could not see '{$text}' because no alert box was shown."
+        );
+    } catch (\WebDriver\Exception\UnknownError $e) {
+        // This would only apply to the PhantomJS driver.
+        // It seems to have issues with alerts, so I'm
+        // not sure what we can do about that...
+        return $this;
+    }
+
+    if ($accept) {
+        $this->acceptAlert();
+    }
+
+    return $this;
+  }
+
   protected function findByCssSelector($selector)
   {
       try {
