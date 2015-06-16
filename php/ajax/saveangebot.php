@@ -6,6 +6,7 @@ include_once(DIR_PHP_SKRIPTS . 'controller.php');
 $angebotID = 0;
 $rechnungID = 0;
 $error = false;
+$errMes = '';
 
 foreach($_POST as $k=>$v){
 	$$k=$v;
@@ -28,19 +29,6 @@ if($angebotsnummer !== ''){
 	}
 }
 
-/*
-//	DEBUG 
-print_r($_POST);
-die('');	
-$result = array(
-	'status' 	=> 'success',
-	'extra'		=>	11906
-	);
-die(json_encode($result));
- */
-
-
-
 /*	Allgemeine Angebotsinfos speichern	*/
 
 $insertAngebotSQL = "INSERT INTO angebote (";
@@ -61,7 +49,9 @@ $insertAngebotSQL .= "
 		text_unten,
 		abschlag_datum,
 		abschlag_summe,
-		endbetrag_typ
+		endbetrag_typ,
+		converted,
+		betrag
 	)
 	VALUES(";
 
@@ -76,12 +66,14 @@ $insertAngebotSQL .= "
 		'$angebotsueberschrift',
 		'$zahlbar',
 		'" . c2d($skontoprozent) . "',
-		'$skontodatum',		
+		'$skontodatum',
 		'$text_oben',
 		'$text_unten',
 		'$abschlagsdatum',
 		'" . c2d($abschlagssumme) . "',
-		'$endbetrag_typ'
+		'$endbetrag_typ',
+		0,
+		0.00
 	)";
 $db->query($insertAngebotSQL);
 if(mysql_error() !==''){
