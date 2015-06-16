@@ -16,7 +16,7 @@ $sites = array(
 		'Artikel hinzufügen'   => 'artikel_erstellen'
 	),
 	'Angebote' => array(
-		'ansehen'   => 'angebot_ansehen',
+		'ansehen'   => 'angebote_ansehen',
 		'erstellen' => 'angebot_erstellen'
 	),
 	'Projekte' => array(

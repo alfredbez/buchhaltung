@@ -1,5 +1,5 @@
 <?php
-$db->query("select 
+$db->query("select
 		angebote.angebotsnummer Angebotsnummer,
 		CONCAT(
 			kunden.titel,' ',
@@ -10,9 +10,9 @@ $db->query("select
 		angebote.lieferdatum Lieferdatum,
 		angebote.ueberschrift Überschrift,
 		ROUND(angebote.betrag,2) Betrag
-	from 
-		angebote,kunden 
-	where 
+	from
+		angebote,kunden
+	where
 		angebote.kundennummer = kunden.kundennummer");
 $keys = array(
 	'Angebotsnummer',
