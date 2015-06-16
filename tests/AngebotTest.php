@@ -1,8 +1,8 @@
 <?php
 
-require_once 'BelegTest.php';
+require_once 'AbstractBelegTest.php';
 
-class AngebotTest extends BelegTest {
+class AngebotTest extends AbstractBelegTest {
 
   protected $mainTable = 'angebote';
   protected $positionenIdField = 'angebotID';

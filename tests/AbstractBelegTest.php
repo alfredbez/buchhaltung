@@ -7,7 +7,7 @@ require_once 'php/classes/pdf.inc.php';
 require_once 'php/classes/rechnung.inc.php';
 require_once 'php/classes/angebot.inc.php';
 
-abstract class BelegTest extends WithKundeTest {
+abstract class AbstractBelegTest extends WithKundeTest {
 
   use WithDatabase, WithTextvorlagen;
 
@@ -186,6 +186,7 @@ abstract class BelegTest extends WithKundeTest {
          ->clickCss("button#save")
          ->waitForElement('info-pdfprint')
          ->snap()
+         ->wait(500)
          ->seeFile(ROOT_DIR . "export/{$this->type}/1.pdf")
          ->verifyInDatabase( $this->mainTable ,[
             'text_oben' => $this->textvorlagenData['text'],
