@@ -34,4 +34,3 @@ $sites = array(
 	'Kalender' => 'kalender',
 	'Einstellungen' => 'einstellungen'
 	);
-?>

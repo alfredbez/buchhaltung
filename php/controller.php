@@ -92,4 +92,3 @@ if(basename(getcwd()) !== 'ajax')
 		include_once(DIR_SITES . $site . '.inc.php');	//	Seite einbinden
 	}
 }
-?>

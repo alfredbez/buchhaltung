@@ -42,7 +42,7 @@ function d2c($number){
 }
 /**
  * Extrahiert die id und die HerstellerID aus einer Kombinierten ID
- *  Beispiel: 
+ *  Beispiel:
  *  		kombinierte ID  : cor42
  *  		ID 				: 42
  *  		herstellerID 	: cor
@@ -53,7 +53,7 @@ function extractArtikelId($s){
 	/* Position der ersten Zahl ermitteln */
 	$chars = str_split($s);
 	$position = false;
-	for ($i=0; $i < count($chars); $i++) { 
+	for ($i=0; $i < count($chars); $i++) {
 		if($position !== false){break;}
 		if(is_numeric($chars[$i])){$position = $i;}
 	}
@@ -63,4 +63,3 @@ function extractArtikelId($s){
 	$herstellerid = substr($s,0,$position);
 	return array($id,$herstellerid);
 }
-?>
