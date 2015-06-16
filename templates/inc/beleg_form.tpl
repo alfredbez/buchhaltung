@@ -33,21 +33,30 @@
 	{* Textvorlagen *}
 	<fieldset>
 		<legend>Textvorlagen</legend>
-		<select id="textvorlagen">
-			{foreach from=$db_info.textvorlagen item=textvorlage}
-			{assign var="label" value=$textvorlage.titel}
-			{if $label==""}
-				{assign var="label" value=$textvorlage.text}
-			{/if}
-			<option value="{$textvorlage.id}" data-text="{$textvorlage.text}">{$label}</option>
-			{/foreach}
-		</select>
+      {if empty($db_info.textvorlagen)}
+        <div class="alert alert-info">
+          <strong>Es gibt noch keine Textvorlagen</strong>
+          Um welche zu erstellen <a href="index.php?site=textvorlagen_erstellen">klicke hier</a>.
+        </div>
+      {else}
+    		<select id="textvorlagen">
+    			{foreach from=$db_info.textvorlagen item=textvorlage}
+    			{assign var="label" value=$textvorlage.titel}
+    			{if $label==""}
+    				{assign var="label" value=$textvorlage.text}
+    			{/if}
+    			<option value="{$textvorlage.id}" data-text="{$textvorlage.text}">{$label}</option>
+    			{/foreach}
+    		</select>
+      {/if}
 	</fieldset>
 	{* Text oberhalb der Artikel *}
 	<fieldset>
 		<legend>Text oberhalb der Artikel</legend>
 		<textarea class="text-beleg" name="text_oben">{$data[0].text_oben}</textarea>
-		<button class="insertTextvorlage btn">Textvorlage einfügen</button>
+		{if !empty($db_info.textvorlagen)}
+      <button class="insertTextvorlage btn">Textvorlage einfügen</button>
+    {/if}
 	</fieldset>
 	{* Artikel *}
 	<fieldset>
@@ -63,7 +72,9 @@
 			<div class="article row-fluid">
 				<div class="span5">
 					<textarea name="name[]" cols="7">{$article.name}</textarea>
-					<button class="insertTextvorlage btn">Textvorlage einfügen</button>
+					{if !empty($db_info.textvorlagen)}
+            <button class="insertTextvorlage btn">Textvorlage einfügen</button>
+          {/if}
 				</div>
 				<div class="span3">
 					<input type="text" name="amount[]" value="{$article.menge}" />
@@ -82,7 +93,9 @@
 	<fieldset>
 		<legend>Text unterhalb der Artikel</legend>
 		<textarea class="text-beleg" name="text_unten">{$data[0].text_unten}</textarea>
-		<button class="insertTextvorlage btn">Textvorlage einfügen</button>
+		{if !empty($db_info.textvorlagen)}
+      <button class="insertTextvorlage btn">Textvorlage einfügen</button>
+    {/if}
 	</fieldset>
 	{* Abschlag *}
 	<fieldset>

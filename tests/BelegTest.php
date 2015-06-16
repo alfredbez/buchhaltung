@@ -146,11 +146,27 @@ abstract class BelegTest extends WithKundeTest {
   /** @test */
   public function it_loads_textvorlagen()
   {
-    $this->createKundeViaQuery()
-         ->insertTextvorlage()
+    $this->insertTextvorlage()
          ->visit("index.php?site={$this->type}_erstellen")
+         ->see('Textvorlage einfügen')
          ->see($this->textvorlagenData['titel'])
          ->see($this->textvorlagenData['text']);
+  }
+
+  /** @test */
+  public function it_follows_link_to_textvorlagen_page()
+  {
+    $this->visit("index.php?site={$this->type}_erstellen")
+         ->follow('klicke hier')
+         ->seePageIs('index.php?site=textvorlagen_erstellen');
+  }
+
+  /** @test */
+  public function it_doesnt_load_textvorlagen_if_there_are_no_ones()
+  {
+    $this->visit("index.php?site={$this->type}_erstellen")
+         ->see('Es gibt noch keine Textvorlagen')
+         ->notSee('Textvorlage einfügen');
   }
 
   /** @test */
