@@ -50,7 +50,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
 
   protected $dummyBelegData = [
     "kundennummer"          => 1,
-    "ueberschrift"          => "",
+    "ueberschrift"          => "Dummy-Beleg",
     "lieferdatum"           => "01.02.2015",
     "text_oben"             => "",
     "text_unten"            => "",
@@ -123,6 +123,23 @@ abstract class AbstractBelegTest extends WithKundeTest {
       {$this->dummyArtikelData['rechnungID']}
     );";
     return $sql;
+  }
+
+  protected function createDummy(){
+    $this->createKundeViaQuery();
+    $this->db()->query( $this->buildBelegSqlQuery() );
+    $this->verifyInDatabase( $this->mainTable, $this->dummyBelegData );
+    $id = mysql_insert_id();
+    $this->dummyArtikelData[ $this->positionenIdField ] = $id;
+    for ($i=0; $i < count($this->dummyArtikelData['name']); $i++) {
+      $this->db()->query( $this->buildArticleSqlQuery($i) );
+      $this->verifyInDatabase( 'positionen', [
+          'name' => $this->dummyArtikelData['name'][$i],
+          'menge' => $this->dummyArtikelData['amount'][$i],
+          'preis' => $this->dummyArtikelData['preis'][$i],
+        ] );
+    }
+    return $this;
   }
 
   protected function generatePdf()
