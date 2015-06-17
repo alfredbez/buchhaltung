@@ -1,15 +1,15 @@
 <?php
 
-require_once 'WithKundeTest.php';
-require_once 'Traits/WithDatabase.php';
+require_once 'AbstractSeleniumTest.php';
+require_once 'Traits/WithKunde.php';
 require_once 'Traits/WithTextvorlagen.php';
 require_once 'php/classes/pdf.inc.php';
 require_once 'php/classes/rechnung.inc.php';
 require_once 'php/classes/angebot.inc.php';
 
-abstract class AbstractBelegTest extends WithKundeTest {
+abstract class AbstractBelegTest extends AbstractSeleniumTest {
 
-  use WithDatabase, WithTextvorlagen;
+  use WithTextvorlagen, WithKunde;
 
   /**
    * 'rechnungen' oder 'angebote'
@@ -126,7 +126,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
   }
 
   protected function createDummy(){
-    $this->createKundeViaQuery();
+    $this->insertKunde();
     $this->db()->query( $this->buildBelegSqlQuery() );
     $this->verifyInDatabase( $this->mainTable, $this->dummyBelegData );
     $id = mysql_insert_id();
@@ -189,7 +189,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
   /** @test */
   public function it_inserts_textvorlage()
   {
-    $this->createKundeViaQuery()
+    $this->insertKunde()
          ->insertTextvorlage()
          ->visit("index.php?site={$this->type}_erstellen")
          ->type('1', 'kundennummer')
@@ -203,7 +203,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
          ->clickCss("button#save")
          ->waitForElement('info-pdfprint')
          ->snap()
-         ->wait(1000)
+         ->wait(2000)
          ->seeFile(ROOT_DIR . "export/{$this->type}/1.pdf")
          ->verifyInDatabase( $this->mainTable ,[
             'text_oben' => $this->textvorlagenData['text'],
@@ -217,7 +217,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
   /** @test */
   public function it_creates_beleg()
   {
-    $this->createKundeViaQuery()
+    $this->insertKunde()
          ->visit("index.php?site={$this->type}_erstellen")
          ->type('1', 'kundennummer')
          ->type('Artikelname', 'name[]')
@@ -241,7 +241,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
          ->snap()
          ->see('11.90') // Betrag brutto
          ->see($this->dummyBelegDatum['value'])
-         ->see($this->data['type']['vorname'] . ' ' . $this->data['type']['nachname']);
+         ->see($this->kundeData['type']['vorname'] . ' ' . $this->kundeData['type']['nachname']);
   }
 
   /**

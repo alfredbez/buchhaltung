@@ -1,8 +1,12 @@
 <?php
 
-require_once 'WithKundeTest.php';
+require_once 'AbstractSeleniumTest.php';
+require_once 'Traits/WithKunde.php';
+require_once 'Traits/WithDeletesMethod.php';
 
-class KundeTest extends WithKundeTest {
+class KundeTest extends AbstractSeleniumTest {
+
+  use WithKunde, WithDeletesMethod;
 
   /** @test */
   public function it_creates_kunde()
@@ -12,7 +16,16 @@ class KundeTest extends WithKundeTest {
            ->see('Der Kunde wurde erfolgreich hinzugefügt!')
            ->closeBrowser();
       $this->visit('index.php?site=kundenuebersicht')
-           ->see($this->data['type']['vorname']);
+           ->see($this->kundeData['type']['vorname']);
+  }
+
+  /** @test */
+  public function it_deletes_kunde()
+  {
+      $this->insertKunde()
+           ->visit('index.php?site=kundenuebersicht')
+           ->see($this->kundeData['type']['vorname'])
+           ->deleteAndCheckOn('kundenuebersicht');
   }
 
   /** @test */

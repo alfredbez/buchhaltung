@@ -1,10 +1,12 @@
 <?php
 
-require_once 'AbstractSeleniumTest.php';
+require_once 'WithDatabase.php';
 
-abstract class WithKundeTest extends AbstractSeleniumTest {
+trait WithKunde {
 
-  protected $data = [
+  use WithDatabase;
+
+  protected $kundeData = [
     'type' => [
       'titel'     => 'Dr.',
       'vorname'   => 'Alfred',
@@ -24,7 +26,7 @@ abstract class WithKundeTest extends AbstractSeleniumTest {
 
   protected function createKunde ($data = false)
   {
-    $data = $data ?: $this->data;
+    $data = $data ?: $this->kundeData;
     $t = $this->visit('index.php?site=neuer_Kunde');
     foreach ($data['type'] as $key => $value) {
       $t = $t->type($value, $key);
@@ -36,9 +38,9 @@ abstract class WithKundeTest extends AbstractSeleniumTest {
     return $this;
   }
 
-  protected function createKundeViaQuery ()
+  protected function insertKunde()
   {
-    $data = array_merge($this->data['type'], $this->data['select']);
+    $data = array_merge($this->kundeData['type'], $this->kundeData['select']);
     $values = $data;
     array_walk($values, function(&$item){
       $item = "'$item'";
@@ -51,6 +53,10 @@ abstract class WithKundeTest extends AbstractSeleniumTest {
     $sql .= ')';
 
     $this->db()->query($sql);
+
+    $this->verifyInDatabase( 'kunden', [
+        'kundennummer' => '1'
+      ] );
 
     return $this;
   }
