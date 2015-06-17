@@ -3,10 +3,11 @@
 require_once 'AbstractSeleniumTest.php';
 require_once 'Traits/WithDatabase.php';
 require_once 'Traits/WithTextvorlagen.php';
+require_once 'Traits/WithDeletesMethod.php';
 
 class TextvorlagenTest extends AbstractSeleniumTest {
 
-  use WithDatabase, WithTextvorlagen;
+  use WithDatabase, WithTextvorlagen, WithDeletesMethod;
 
   /** @test */
   public function it_creates()
@@ -44,11 +45,7 @@ class TextvorlagenTest extends AbstractSeleniumTest {
   {
       $this->insertTextvorlage()
            ->visit('index.php?site=textvorlagen_uebersicht')
-           ->findByNameOrId('delete')->click();
-      $this->wait(500)->findByNameOrId('#sure')->click();
-      $this->closeBrowser();
-      $this->visit('index.php?site=textvorlagen_uebersicht')
-           ->see('Keine Einträge vorhanden.');
+           ->deleteAndCheckOn('textvorlagen_uebersicht');
   }
 
   /** @test */
