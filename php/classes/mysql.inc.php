@@ -31,7 +31,15 @@ class DB_MySQL {
   }
 
   public function fetchRow() {
-  	return mysql_fetch_assoc($this->result);
+    return mysql_fetch_assoc($this->result);
+  }
+
+  public function fetchAll() {
+    $res = [];
+    while($row = $this->fetchRow()){
+      $res[] = $row;
+    }
+  	return $res;
   }
 
   public function affected(){
@@ -39,8 +47,8 @@ class DB_MySQL {
   }
 
   public function count() {
-  	if($this->counter==NULL && is_resource($this->result)) {
-  		$this->counter=mysql_num_rows($this->result);
+    if($this->counter==NULL && is_resource($this->result)) {
+      $this->counter = mysql_num_rows($this->result);
   	}
     if($this->counter == 0 && mysql_affected_rows() > 0){
       $this->counter = mysql_affected_rows();
