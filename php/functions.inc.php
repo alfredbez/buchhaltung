@@ -63,3 +63,15 @@ function extractArtikelId($s){
 	$herstellerid = substr($s,0,$position);
 	return array($id,$herstellerid);
 }
+
+/**
+ * Prüft ob das Feld $field in der Datenbank-Tabelle $table existiert
+ * @param  string $field Name des zu suchenden Datenbankfeldes
+ * @param  string $table Name der Datenbanktabelle, in der gesucht werden soll
+ * @return boolean      true = Feld vorhanden, false = Feld nicht vorhanden
+ */
+function fieldExists($field, $table) {
+  global $db;
+  $db->query("SHOW COLUMNS FROM {$table} LIKE '{$field}'");
+  return $db->affected() === 1;
+}
