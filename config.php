@@ -2,7 +2,12 @@
 define('ROOT_DIR',dirname(__FILE__) . '/');
 
 $localIps = array('192.168.56.1', '127.0.0.1', '::1');
-$env = in_array($_SERVER['REMOTE_ADDR'], $localIps) ? 'local' : 'remote';
+if(isset($_SERVER['REMOTE_ADDR'])) {
+  $env = in_array($_SERVER['REMOTE_ADDR'], $localIps) ? 'local' : 'remote';
+}
+else {
+  $env = 'local';
+}
 
 if(getenv('env') === 'testing') {
   $env = 'local';
