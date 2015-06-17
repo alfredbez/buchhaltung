@@ -590,11 +590,17 @@ $(document).ready(function() {
     /*  click on tr     */
     $('table#rechnungen tbody').delegate('tr', 'click', function() {
         var el = $(this),
-            name = el.find('td:nth-child(5)').text(),
+            name = el.find('td:nth-child(5)').text() || '(ohne Überschrift)',
             id = el.find('td:first').text();
         $('#rechnungModal #rechnungModalLabel').text(name);
         $('#rechnungModal #rechnungsnummer').text(id);
-        $('#rechnungModal .modal-body .buttons').html('<a href="export/rechnung/' + id + '.pdf" target="_blank" class="btn btn-primary"><i class="icon-eye-open icon-white"></i> Öffnen</a><a href="export/rechnung/print/' + id + '.pdf" target="_blank" class="btn"><i class="icon-print"></i> Druckversion öffnen</a><a href="index.php?site=rechnung_bearbeiten&id=' + id + '" class="btn"><i class="icon-edit"></i> Bearbeiten</a><a href="#" id="delete" data-type="rechnung" data-id="' + id + '" class="btn btn-danger"><i class="icon-trash icon-white"></i> Löschen</a><hr /><a href="#" data-id="' + id + '" data-type="rechnung" id="refreshPDF" class="btn"><i class="icon-refresh"></i> PDF neu erstellen</a>');
+        var htmlContent = '';
+        htmlContent += '<a href="export/rechnung/' + id + '.pdf" target="_blank" class="btn btn-primary"><i class="icon-eye-open icon-white"></i> Öffnen</a>';
+        htmlContent += '<a href="export/rechnung/print/' + id + '.pdf" target="_blank" class="btn"><i class="icon-print"></i> Druckversion öffnen</a>';
+        htmlContent += '<a href="index.php?site=rechnung_bearbeiten&id=' + id + '" class="btn"><i class="icon-edit"></i> Bearbeiten</a>';
+        htmlContent += '<a href="#" id="delete" data-type="rechnung" data-id="' + id + '" class="btn btn-danger"><i class="icon-trash icon-white"></i> Löschen</a>';
+        htmlContent += '<hr /><a href="#" data-id="' + id + '" data-type="rechnung" id="refreshPDF" class="btn"><i class="icon-refresh"></i> PDF neu erstellen</a>';
+        $('#rechnungModal .modal-body .buttons').html(htmlContent);
         $('#rechnungModal').modal('show');
     });
 
@@ -604,7 +610,7 @@ $(document).ready(function() {
     /*  click on tr     */
     $('table#angebote tbody').delegate('tr', 'click', function() {
         var el = $(this),
-            name = el.find('td:nth-child(5)').text(),
+            name = el.find('td:nth-child(5)').text() || '(ohne Überschrift)',
             id = el.find('td:first').text();
         $.ajax({
             url: 'php/ajax/isConverted.php?id=' + id,
@@ -753,6 +759,8 @@ $(document).ready(function() {
             id = row.find('td:nth-child(1)').text(),
             name = row.find('td:nth-child(3)').text() + ' ' + row.find('td:nth-child(4)').text(),
             titel = row.find('td:nth-child(2)').text();
+
+        name = name || '(ohne Überschrift)';
 
         $('#deleteModalLabel').text(name);
         $('#name').text(titel);
