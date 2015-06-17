@@ -28,7 +28,7 @@
   				<td><button name="delete" class="btn btn-mini btn-danger delete"><i class="icon-trash icon-white"></i></button></td>
   			{/if}
   			{if isset($showdetails)}
-  				<td><button class="btn btn-mini details"><i class="icon-eye-open"></i></button></td>
+  				<td><button name="details" class="btn btn-mini details"><i class="icon-eye-open"></i></button></td>
   			{/if}
         {if isset($showDetailPage)}
           <td><a href="index.php?site={$showDetailPage}&id={$row.id}" class="btn btn-mini"><i class="icon-edit"></i></a></td>
