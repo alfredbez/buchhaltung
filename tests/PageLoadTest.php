@@ -1,5 +1,7 @@
 <?php
 
+require_once 'AbstractTest.php';
+
 class PageLoadTest extends AbstractTest {
 
   /** @test */
