@@ -1,16 +1,14 @@
 <?php
 $error = '';
 /* DB-Update-Skript */
-$sql[] = "ALTER TABLE rechnungen ADD endbetrag_typ VARCHAR(10) NOT NULL";
-$sql[] = "ALTER TABLE angebote ADD endbetrag_typ VARCHAR(10) NOT NULL";
-$sql[] = "UPDATE rechnungen SET endbetrag_typ='brutto'";
-$sql[] = "UPDATE angebote SET endbetrag_typ='brutto'";
+$sql = [];
+if(!fieldExists('bezahlt_am', 'rechnungen'))
+{
+	$sql[] = "ALTER TABLE `rechnungen` ADD `bezahlt_am` text";
+}
 foreach($sql as $s){
 	$db->query($s);
-	if($db->count() == 0){
-		$error .= 'Datensatz wurde nicht erfolgreich gespeichert!<br />' . $s . '<br />';
-	}
-	if(mysql_error()!=''){
+	if(mysql_error() !== '' ){
 		$error .= mysql_error();
 		$error .= '<br />' . $s . '<br />';
 	}
@@ -18,12 +16,24 @@ foreach($sql as $s){
 		$error .= '<br />';
 	}
 }
-if($error != ''){
-	$smarty->assign('message',$error);
-	$smarty->assign('messageType','error');
+if(!fieldExists('bezahlt_am', 'rechnungen'))
+{
+	$error .= "Das Feld 'bezahlt_am' konnte nicht in die Tabelle 'rechnungen' ";
+	$error .= "eingefügt werden";
+	$error .= '<br />' . $s . '<br />';
 }
-else{
-	$smarty->assign('message','Updates wurden erfolgreich durchgeführt!');
+if(count($sql) === 0){
+	$smarty->assign('message', 'Es gibt keine Updates');
 	$smarty->assign('messageType','success');
+}
+else {
+	if($error != ''){
+		$smarty->assign('message',$error);
+		$smarty->assign('messageType','error');
+	}
+	else{
+		$smarty->assign('message','Updates wurden erfolgreich durchgeführt!');
+		$smarty->assign('messageType','success');
+	}
 }
 ?>

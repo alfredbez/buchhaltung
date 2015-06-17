@@ -1,7 +1,7 @@
 {if empty($bodyItems)}
   Keine Einträge vorhanden.
 {else}
-  <table class="dataTable"{if isset($id)} id="{$id}"{/if}>
+  <table class="table dataTable"{if isset($id)} id="{$id}"{/if}>
   	<thead>
   		<tr>
   			{foreach from=$headItems item=item}
@@ -20,7 +20,7 @@
   	</thead>
   	<tbody>
   		{foreach from=$bodyItems item=row}
-  		<tr>
+  		<tr class="{if $row.bezahlt_am !=''}success{/if}">
   			{foreach from=$row item=col}
   				<td{if isset($inlineedit)} class="edit"{/if}>{$col}</td>
   			{/foreach}

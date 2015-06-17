@@ -52,7 +52,8 @@ table.dataTable{
         background-color: $light-bg;
         td.sorting_1 { background-color: darken( $light-bg , 5% ); }
       }
-      &:hover  {
+      &:not(.success):hover
+      {
         background-color: darken( $light-bg , 75% );
         color: $light-text;
         td.sorting_1 {
