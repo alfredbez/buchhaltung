@@ -60,7 +60,7 @@ class AngebotTest extends AbstractBelegTest {
          ->typeInPrompt('')
          ->seeInAlert('Soll das im Angebot angegebene Lieferdatum verwendet werden?', false)
          ->dismissAlert()
-         ->wait(1500)
+         ->wait(2000)
          ->seeFile(ROOT_DIR . "export/rechnung/1.pdf")
          ->verify_lieferdatum_in_database('');
   }
@@ -71,7 +71,7 @@ class AngebotTest extends AbstractBelegTest {
     $lieferdatum = '31.12.2015';
     $this->prepare_create_rechnung_from_angebot($lieferdatum)
          ->typeInPrompt($lieferdatum)
-         ->wait(1500)
+         ->wait(2000)
          ->closeBrowser();
 
     $this->visit('index.php?site=rechnungen_ansehen')

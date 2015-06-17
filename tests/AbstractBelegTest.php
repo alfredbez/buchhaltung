@@ -227,7 +227,7 @@ abstract class AbstractBelegTest extends WithKundeTest {
          ->type($this->dummyBelegDatum['value'], $this->dummyBelegDatum['field'])
          ->clickCss('input[value="sofort"]')
          ->clickCss("button#save")
-         ->wait(1000)
+         ->wait(2000)
          ->seeFile(ROOT_DIR . "export/{$this->type}/1.pdf")
          ->verifyInDatabase( $this->mainTable, ['kundennummer' => 1])
          ->verifyInDatabase('positionen',[
