@@ -1,4 +1,5 @@
 <?php
+
 $db->query("select
 		angebote.angebotsnummer Angebotsnummer,
 		CONCAT(
@@ -15,21 +16,20 @@ $db->query("select
 	where
 		angebote.kundennummer = kunden.kundennummer");
 $keys = array(
-	'Angebotsnummer',
-	'Name',
-	'Angebotsdatum',
-	'Lieferdatum',
-	'Überschrift',
-	'Betrag'
+    'Angebotsnummer',
+    'Name',
+    'Angebotsdatum',
+    'Lieferdatum',
+    'Überschrift',
+    'Betrag',
 );
 $res = array();
-while($row = $db->fetchRow()){
-	$temp = NULL;
-	foreach($keys as $key){
-		$temp[$key] = $row[$key];
-	}
-	$res[] = $temp;
+while ($row = $db->fetchRow()) {
+    $temp = null;
+    foreach ($keys as $key) {
+        $temp[$key] = $row[$key];
+    }
+    $res[] = $temp;
 }
-$smarty->assign('res',$res);
-$smarty->assign('keys',$keys);
-?>
+$smarty->assign('res', $res);
+$smarty->assign('keys', $keys);

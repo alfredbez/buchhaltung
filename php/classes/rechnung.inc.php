@@ -1,5 +1,5 @@
 <?php
-class rechnung extends pdf {
-	// leer
+class rechnung extends pdf
+{
+    // leer
 }
-?>

@@ -1,24 +1,22 @@
 <?php
 
-include_once('../../config.php');
-include_once(DIR_PHP_SKRIPTS . 'controller.php');
-
+include_once '../../config.php';
+include_once DIR_PHP_SKRIPTS.'controller.php';
 
 $id = mysql_real_escape_string($_GET['id']);
-$heute = date("d.m.Y",time());
+$heute = date('d.m.Y', time());
 
 $lieferdatum = mysql_real_escape_string($_GET['lieferdatum']);
 
 $error = false;
 
 /* Informationen aus Angebot auslesen */
-$sql = "select * from angebote where angebotsnummer=" . $id;
+$sql = 'select * from angebote where angebotsnummer='.$id;
 $db->query($sql);
 $angebotData = $db->fetchRow();
 
-if($lieferdatum === 'ausAngebot')
-{
-	$lieferdatum = $angebotData['lieferdatum'];
+if ($lieferdatum === 'ausAngebot') {
+    $lieferdatum = $angebotData['lieferdatum'];
 }
 /* Daten in Tabelle rechnungen schreiben */
 $sql = "INSERT INTO rechnungen (
@@ -42,50 +40,46 @@ $sql = "INSERT INTO rechnungen (
 		'{$lieferdatum}',
 		'{$angebotData['ueberschrift']}',
 		'{$angebotData['zahlungsart']}',
-		'" . c2d($angebotData['skonto_prozente']) . "',
+		'".c2d($angebotData['skonto_prozente'])."',
 		'{$angebotData['skonto_datum']}',
 		'{$angebotData['abschlag_datum']}',
-		'" . c2d($angebotData['abschlag_summe']) . "',
+		'".c2d($angebotData['abschlag_summe'])."',
 		'{$angebotData['text_oben']}',
 		'{$angebotData['text_unten']}',
-		" . c2d($angebotData['betrag']) . ",
+		".c2d($angebotData['betrag']).",
 		'{$angebotData['endbetrag_typ']}'
 	)";
 $db->query($sql);
-if($db->affected() < 0)
-{
-	$result = array(
-		'status' 	=> 'error',
-		'extra'		=>	mysql_error()
-		);
+if ($db->affected() < 0) {
+    $result = array(
+        'status' => 'error',
+        'extra' => mysql_error(),
+        );
 }
 $rechnungsnummer = mysql_insert_id();
 /* Positionen aktualisieren */
-$sql = "update positionen set rechnungID=" . $rechnungsnummer . " where angebotID=" . $id;
+$sql = 'update positionen set rechnungID='.$rechnungsnummer.' where angebotID='.$id;
 $db->query($sql);
 /* Angebot als umgewandelt markieren (converted) */
 $sql = "update angebote set converted=$rechnungsnummer where angebotsnummer=$id";
 $db->query($sql);
 
-if(mysql_error() !== ''){
-	$error = true;
-	$errMes = mysql_error();
+if (mysql_error() !== '') {
+    $error = true;
+    $errMes = mysql_error();
 }
 
-if(!isset($result))
-{
-	if(!$error){
-		$result = array(
-			'status' 	=> 'success',
-			'extra'		=>	$rechnungsnummer
-			);
-	}
-	else{
-		$result = array(
-			'status' 	=> 'error',
-			'extra'		=>	$errMes
-			);
-	}
+if (!isset($result)) {
+    if (!$error) {
+        $result = array(
+            'status' => 'success',
+            'extra' => $rechnungsnummer,
+            );
+    } else {
+        $result = array(
+            'status' => 'error',
+            'extra' => $errMes,
+            );
+    }
 }
 echo json_encode($result);
-?>
