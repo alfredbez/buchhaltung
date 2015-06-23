@@ -26,6 +26,10 @@ abstract class AbstractSeleniumTest extends IntegrationTest {
 
   protected function baseUrl()
   {
+    if(getenv('TRAVIS'))
+    {
+      return 'http://localhost:8000';
+    }
     return 'http://192.168.56.101/igor';
   }
 
