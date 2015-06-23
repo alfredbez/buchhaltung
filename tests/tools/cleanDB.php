@@ -9,7 +9,12 @@ function cleanDB()
       $mysqldb = getenv('mysqldb') ?: 'buchhaltung_test';
   }
 
-  $cmd = 'mysql -u ' . $mysqluser . ' -p' . $mysqlpwd . ' ' . $mysqldb . ' < db/test.sql';
+  if($mysqlpwd === '')
+  {
+    $passwordFlag = '--password=""';
+  }
+  $passwordFlag = $passwordFlag ?: '-p' . $mysqlpwd;
+  $cmd = 'mysql -u ' . $mysqluser . ' ' . $passwordFlag . ' ' . $mysqldb . ' < db/test.sql';
   // mute command
   // $cmd .= ' > /dev/null 2>&1';
   shell_exec($cmd);
