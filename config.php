@@ -34,7 +34,16 @@ define('FPDF_FONTPATH', ROOT_DIR.'vendor/itbz/fpdf/src/fpdf/font/');
 
 $errorsite = 'error';
 
-include DIR_PHP_SKRIPTS.'mysql_config.php';
+if(DIR_PHP_SKRIPTS.'mysql_config.php') {
+    include DIR_PHP_SKRIPTS.'mysql_config.php';
+}
+else if(getenv('TRAVIS')) {
+    $mysqlhost = '127.0.0.1';
+    $mysqldb = 'buchhaltung_test';
+    $mysqluser = 'root';
+    $mysqlpwd = '';
+}
+
 
 include_once DIR_PHP_SKRIPTS.'functions.inc.php';
 require_once 'vendor/autoload.php';

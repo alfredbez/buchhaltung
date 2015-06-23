@@ -4,7 +4,7 @@ function cleanDB()
 
   if(getenv('TRAVIS'))
   {
-    $cmd = 'mysql -u root --password="" buchhaltung_test < db/test.sql';
+    $cmd = 'mysql -h 127.0.0.1 -u root --password="" buchhaltung_test < db/test.sql';
   }
   else
   {
