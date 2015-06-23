@@ -34,7 +34,7 @@ define('FPDF_FONTPATH', ROOT_DIR.'vendor/itbz/fpdf/src/fpdf/font/');
 
 $errorsite = 'error';
 
-if(DIR_PHP_SKRIPTS.'mysql_config.php') {
+if(file_exists(DIR_PHP_SKRIPTS.'mysql_config.php')) {
     include DIR_PHP_SKRIPTS.'mysql_config.php';
 }
 else if(getenv('TRAVIS')) {
