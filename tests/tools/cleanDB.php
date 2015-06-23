@@ -3,9 +3,9 @@ function cleanDB()
 {
 
   if (getenv('mysqlhost') || file_exists(ROOT_DIR.'.test.lock')) {
-      $mysqlhost = getenv('mysqlhost') ?: 'localhost';
-      $mysqluser = getenv('mysqluser') ?: 'dbuser';
-      $mysqlpwd = getenv('mysqlpwd') ?: '123';
+      $mysqlhost = getenv('mysqlhost') ?: '127.0.0.1';
+      $mysqluser = getenv('mysqluser') ?: 'root';
+      $mysqlpwd = getenv('mysqlpwd') ?: '';
       $mysqldb = getenv('mysqldb') ?: 'buchhaltung_test';
   }
 
