@@ -17,5 +17,5 @@ function cleanDB()
   $cmd = 'mysql -u ' . $mysqluser . ' ' . $passwordFlag . ' ' . $mysqldb . ' < db/test.sql';
   // mute command
   // $cmd .= ' > /dev/null 2>&1';
-  echo shell_exec($cmd);
+  die(var_dump(shell_exec($cmd)));
 }
