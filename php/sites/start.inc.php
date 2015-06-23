@@ -33,6 +33,7 @@ $data['rechnungen'] = [
   'gesamtumsatz' => 0,
   'monatsumsatz' => [],
   'gesamtumsatzMonatlich' => [],
+  'belegDurchschnittsbetrag' => [],
   'belegeProMonat' => [],
 ];
 while ($row = $db->fetchRow()) {
@@ -80,6 +81,7 @@ $data['angebote'] = [
   'gesamtumsatz' => 0,
   'monatsumsatz' => [],
   'gesamtumsatzMonatlich' => [],
+  'belegDurchschnittsbetrag' => [],
   'belegeProMonat' => [],
 ];
 while ($row = $db->fetchRow()) {

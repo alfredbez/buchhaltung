@@ -127,25 +127,3 @@ $(function () {
     });
 </script>
 </div>
-<!-- ->
-<div class="span11">
-<h3>Angebotsbeträge pro Monat</h3>
-<canvas id="canvas_angebote" height="500" width="800"></canvas>
-<script>
-var lineChartData_angebote = {
-		labels : [{$labels_angebote}],
-		datasets : [
-			{
-				fillColor : "rgba(175, 186, 205,0.5)",
-				strokeColor : "rgba(56, 83, 130,1)",
-				pointColor : "rgba(56, 83, 130,0.5)",
-				pointStrokeColor : "#fff",
-				data : [{$data_angebote}]
-			}
-		]
-
-	},
-	myLine_angebote = new Chart(document.getElementById("canvas_angebote").getContext("2d")).Line(lineChartData_angebote);
-</script>
-</div>
-<!-- -->
