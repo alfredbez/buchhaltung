@@ -8,6 +8,22 @@ require_once 'Traits/TestTrait.php';
 abstract class AbstractSeleniumTest extends IntegrationTest {
   use TestTrait, WorksWithDatabase;
 
+  /**
+   * Execute the query.
+   *
+   * @param  \PDOStatement $query
+   * @return \PDOStatement
+   */
+  protected function execute($query)
+  {
+    $query->execute($this->bindings);
+
+    $this->bindings = [];
+    $this->wheres   = [];
+
+    return $query;
+  }
+
   protected function baseUrl()
   {
     return 'http://192.168.56.101/igor';
