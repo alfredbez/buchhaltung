@@ -4,6 +4,7 @@ templates_c
 templates/css
 node_modules
 debug.txt
+php.ini
 export/*
 !export/rechnung/
 export/rechnung/*
