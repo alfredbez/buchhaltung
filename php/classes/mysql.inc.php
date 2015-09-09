@@ -5,11 +5,14 @@ class DB_MySQL
     private $connection = null;
     private $result = null;
     private $counter = null;
+    private $logfile;
 
     public $queries = array();
 
     public function __construct($host = null, $database = null, $user = null, $pass = null)
     {
+        // TODO: use Logger Class
+        $this->logfile = $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REQUEST_URI"] . 'log';
         $this->connection = mysql_connect($host, $user, $pass, true) or die('Datenbankverbindung fehlgeschlagen');
         mysql_select_db($database, $this->connection) or die('Konnte Datenbank "'.$database.'" nicht auswählen');
         $this->query('SET NAMES utf8');
@@ -38,6 +41,13 @@ class DB_MySQL
 
     public function fetchRow()
     {
+        if ($this->result === false) {
+            file_put_contents(
+                $this->logfile,
+                date('Y-m-d H:i') . ' error: ' . mysql_error()
+            );
+            return false;
+        }
         return mysql_fetch_assoc($this->result);
     }
 
