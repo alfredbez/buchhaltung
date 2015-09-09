@@ -489,6 +489,72 @@ $(document).ready(function() {
             });
         }
     });
+    $('body').on('click', '#markAsPaid', function() {
+        var id = $(this).attr('data-id');
+        var bezahltAmDatum;
+        var dateRegex = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+
+        var placeholderFormat = new Date();
+        var dd = placeholderFormat.getDate();
+        var mm = placeholderFormat.getMonth()+1; //January is 0!
+        var yyyy = placeholderFormat.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        }
+
+        if(mm<10) {
+            mm='0'+mm
+        }
+
+        placeholderFormat = dd+'.'+mm+'.'+yyyy;
+
+        bezahltAmDatum = prompt("Datum:", placeholderFormat);
+
+        if(bezahltAmDatum === placeholderFormat)
+        {
+            bezahltAmDatum = '';
+        }
+
+        if(!bezahltAmDatum.match(dateRegex) && bezahltAmDatum !== ''){
+            alert('Die Eingabe ' + bezahltAmDatum + ' ist kein gültiges Datum'
+                    + ' im Format ' + placeholderFormat);
+            return false;
+        }
+        $.ajax({
+            url: 'php/ajax/markAsPaid.php?id=' + id + '&date=' + bezahltAmDatum,
+            success: function(data) {
+                var data = $.parseJSON(data);
+                $('#rechnungModal').modal('hide');
+
+                $('table#rechnungen tbody tr').each(function() {
+                    if (id === $(this).find('td:nth-child(1)').text()) {
+                        $(this).find('td:last-child').text(data.extra);
+                        $(this).removeClass('not-paid');
+                        $(this).addClass('success');
+                    }
+                });
+            }
+        });
+    });
+    $('body').on('click', '#markAsUnpaid', function() {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            url: 'php/ajax/markAsUnpaid.php?id=' + id,
+            success: function(data) {
+                var data = $.parseJSON(data);
+                $('#rechnungModal').modal('hide');
+
+                $('table#rechnungen tbody tr').each(function() {
+                    if (id === $(this).find('td:nth-child(1)').text()) {
+                        $(this).find('td:last-child').text(data.extra);
+                        $(this).removeClass('success');
+                        $(this).addClass('not-paid');
+                    }
+                });
+            }
+        });
+    });
     /* PDF neu generieren  */
     $('body').on('click', '#refreshPDF', function() {
         /* lokale Variablen */
@@ -598,6 +664,12 @@ $(document).ready(function() {
         htmlContent += '<a href="export/rechnung/' + id + '.pdf" target="_blank" class="btn btn-primary"><i class="icon-eye-open icon-white"></i> Öffnen</a>';
         htmlContent += '<a href="export/rechnung/print/' + id + '.pdf" target="_blank" class="btn"><i class="icon-print"></i> Druckversion öffnen</a>';
         htmlContent += '<a href="index.php?site=rechnung_bearbeiten&id=' + id + '" class="btn"><i class="icon-edit"></i> Bearbeiten</a>';
+        if(el.hasClass('not-paid')) {
+            htmlContent += '<a href="#" id="markAsPaid" data-id="' + id + '" class="btn"><i class="icon-ok"></i> Als bezahlt markieren</a>';
+        }
+        else if(el.hasClass('success')) {
+            htmlContent += '<a href="#" id="markAsUnpaid" data-id="' + id + '" class="btn"><i class="icon-remove"></i> Als nicht bezahlt markieren</a>';
+        }
         htmlContent += '<a href="#" id="delete" data-type="rechnung" data-id="' + id + '" class="btn btn-danger"><i class="icon-trash icon-white"></i> Löschen</a>';
         htmlContent += '<hr /><a href="#" data-id="' + id + '" data-type="rechnung" id="refreshPDF" class="btn"><i class="icon-refresh"></i> PDF neu erstellen</a>';
         $('#rechnungModal .modal-body .buttons').html(htmlContent);

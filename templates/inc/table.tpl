@@ -20,7 +20,7 @@
   	</thead>
   	<tbody>
   		{foreach from=$bodyItems item=row}
-  		<tr class="{if $row.bezahlt_am !=''}success{/if}">
+  		<tr class="{if $row.bezahlt_am !=''}success{else}{if $id == 'rechnungen'}not-paid{/if}{/if}">
   			{foreach from=$row item=col}
   				<td{if isset($inlineedit)} class="edit"{/if}>{$col}</td>
   			{/foreach}
