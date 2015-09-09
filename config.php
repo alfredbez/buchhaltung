@@ -21,10 +21,8 @@ if ($env === 'local') {
 
 if ($env === 'local') {
     ini_set('display_errors', 'On');
-    error_reporting(E_ALL);
-} else {
-    error_reporting(0);
 }
+error_reporting(E_ALL ^ E_DEPRECATED);
 
 define('DIR_LIBS', ROOT_DIR.'libs/');
 define('DIR_PHP_SKRIPTS', ROOT_DIR.'php/');
