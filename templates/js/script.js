@@ -780,7 +780,6 @@ $(document).ready(function() {
             cellName = $('#kunden thead th:nth-child(' + cellIndex + ')').text(),
             id = $(this).parent().find('td:nth-child(1)').text();
         $('.edit').editable(function(value, settings) {
-            console.log(id);
             $(this).load('php/ajax/saveKundenTable.php?id=' + id + '&value=' + encodeURIComponent(value) + '&cellName=' + cellName);
             return true;
         }, {
@@ -936,8 +935,6 @@ $(document).ready(function() {
         $.ajax({
             url: 'php/ajax/checkLog.php?type=' + type,
             success: function(countLines){
-                console.log(countLines);
-                console.log(el);
                 var text = el.text();
                 el.text(text + ' (' + countLines + ')');
             }
