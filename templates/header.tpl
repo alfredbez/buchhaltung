@@ -34,13 +34,9 @@
 						{/if}
 						{/foreach}
 					</ul>
-					{*
-					<ul class="nav">
-						{foreach from=$sites item=s}
-						<li><a href="index.php?site={$s}">{$s|replace:"_":" "|ucfirst}</a></li>
-						{/foreach}
-					</ul>
-					*}
+					<form class="navbar-form pull-right">
+					  <button type="button" id="clearCache" class="btn"><i class="icon-trash"></i> <span>Cache leeren</span></button>
+					</form>
 				</div>
 			</div>
 		</div>

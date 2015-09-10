@@ -901,4 +901,34 @@ $(document).ready(function() {
 
         $('#detailsModal .modal-body').load("php/ajax/getKundeInfo.php?id=" + id);
     });
+
+    /* Cache */
+    var cacheIsEmpty = function(button) {
+        button.find('i').attr('class', '').addClass('icon-ok');
+        button.addClass('btn-success');
+        button.find('span').text('Cache ist leer');
+    }
+    $.ajax({
+        url: 'php/ajax/cache.php?action=check',
+        success: function(countFiles){
+            var button = $('#clearCache');
+            if(countFiles != 0) {
+                var text = button.find('span').text();
+                button.find('span').text(text + ' (Dateien: ' + countFiles + ')');
+            }
+            else {
+                cacheIsEmpty(button);
+            }
+        }
+    });
+    $('#clearCache').click(function(){
+        var button = $(this);
+        $.ajax({
+            url: 'php/ajax/cache.php?action=clear',
+            success: function(){
+                cacheIsEmpty(button);
+            }
+        });
+        return false;
+    });
 });
