@@ -37,6 +37,45 @@ $(document).ready(function() {
                 }
             });
         },
+        getAllIds = function(type) {
+            /* Get all ids */
+            return $.ajax({
+                url: 'php/ajax/getAll' + type + 'Ids.php'
+            });
+        },
+        generateQuietPdf = function(type, id){
+            return $.ajax({
+                url: 'php/ajax/createPDF' + type + '.php',
+                type: 'POST',
+                data: 'id=' + id
+            });
+        },
+        generateQuietPdfPrint = function(type, id){
+            return $.ajax({
+                url: 'php/ajax/createPDF' + type + '_print.php',
+                type: 'POST',
+                data: 'id=' + id
+            });
+        },
+        generateAllPDFs = function(type) {
+            $.when(getAllIds(type)).done(function(ids){
+                var ids = $.parseJSON(ids);
+                $.each(ids, function(index, id){
+                    $.when(
+                        generateQuietPdf(type, id),
+                        generateQuietPdfPrint(type, id)
+                    ).done(function(){
+                        var percentage = (index + 1) / ids.length * 100;
+                        $('.progress .bar').css('width', percentage + '%');
+                        if((index+1) === ids.length){
+                            $('.progress .bar').parent().addClass('progress-success');
+                            $('.progress .bar').parent().removeClass('active');
+                            $('.progress .bar').css('width', '100%');
+                        }
+                    });
+                });
+            });
+        },
         generatePDF = function(id, modalid, type) {
             /* PDF mit Hintergrundbild generieren */
             $.ajax({
@@ -555,7 +594,28 @@ $(document).ready(function() {
             }
         });
     });
-    /* PDF neu generieren  */
+    /* alle PDFs neu generieren  */
+    $('body').on('click', '#refreshAllPDFs', function() {
+        /* lokale Variablen */
+        var content = '';
+        /* globale Variablen */
+        type = $(this).attr('data-type');
+        id = $(this).attr('data-id');
+
+        $('#' + type + 'Modal').modal('hide');
+
+        /*  Progressbar erstellen   */
+        content += '<h4>Fortschritt</h4><div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>';
+
+        $('#updateModal .modal-body').html(content);
+
+        $('#updateModal').modal('show');
+
+        $('#updateModal').on('shown', function() {
+            generateAllPDFs(type);
+        });
+    });
+    /* ein PDF neu generieren  */
     $('body').on('click', '#refreshPDF', function() {
         /* lokale Variablen */
         var content = '';

@@ -1,3 +1,5 @@
+<button id="refreshAllPDFs" data-type="rechnung" class="btn btn-success"><i class="icon-refresh"></i> Alle Rechnungen neu generieren</button>
+<hr>
 {include file="../inc/table.tpl" headItems=$keys bodyItems=$res id="rechnungen"}
 <!-- Modal -->
 <div id="rechnungModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="rechnungModalLabel" aria-hidden="true">
