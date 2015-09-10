@@ -9,8 +9,7 @@ $keys = [
   'Betrag' => 'Betrag',
   'bezahlt_am' => 'bezahlt am',
 ];
-$sql = '';
-$sql .= "select
+$db->query("SELECT
     rechnungen.rechnungsnummer Rechnungsnummer,
     CONCAT(
       kunden.titel,' ',
@@ -19,18 +18,14 @@ $sql .= "select
     ) Name,
     rechnungen.rechnungsdatum Rechnungsdatum,
     rechnungen.lieferdatum Lieferdatum,
-    rechnungen.ueberschrift Überschrift,";
-if (fieldExists('bezahlt_am', 'rechnungen')) {
-    $sql .= 'rechnungen.bezahlt_am bezahlt_am,';
-    $keys['bezahlt_am'] = 'bezahlt am';
-}
-$sql .= '
+    rechnungen.ueberschrift Überschrift,
+    rechnungen.bezahlt_am bezahlt_am,
     ROUND(rechnungen.betrag,2) Betrag
-  from
+  FROM
     rechnungen,kunden
-  where
-    rechnungen.kundennummer = kunden.kundennummer';
-$db->query($sql);
+  WHERE
+    rechnungen.deleted = 0
+    AND rechnungen.kundennummer = kunden.kundennummer");
 $res = array();
 while ($row = $db->fetchRow()) {
     $temp = [];
