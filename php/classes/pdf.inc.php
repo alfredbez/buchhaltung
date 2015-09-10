@@ -149,7 +149,16 @@ class pdf extends fpdf\FPDF
     public function printBG()
     {
         if ($this->printversion !== true) {
-            $this->Image('bg.jpg', 0, 0, 210, 297);   // Hintergrundbild festlegen
+            /* Hintergrundbild festlegen */
+            $this->Image('bg.jpg', 0, 0, 210, 297);
+            /* creditreform logo */
+            $this->Image(
+                'creditreform.png',
+                $this->einstellungen['creditreform_logo_abstand_links'],
+                $this->einstellungen['creditreform_logo_abstand_oben'],
+                $this->einstellungen['creditreform_logo_breite'],
+                $this->einstellungen['creditreform_logo_hoehe']
+            );
         } else {
             $this->falzmarken();
         }
