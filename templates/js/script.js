@@ -730,6 +730,8 @@ $(document).ready(function() {
         else if(el.hasClass('success')) {
             htmlContent += '<a href="#" id="markAsUnpaid" data-id="' + id + '" class="btn"><i class="icon-remove"></i> Als nicht bezahlt markieren</a>';
         }
+        htmlContent += '<a href="#" data-level="1" data-id="' + id + '" class="btn btn-warning zahlungserinnerung"><i class="icon-warning-sign icon-white"></i> Zahlungserinnerung 1</a>';
+        htmlContent += '<a href="#" data-level="2" data-id="' + id + '" class="btn btn-warning zahlungserinnerung"><i class="icon-warning-sign icon-white"></i> Zahlungserinnerung 2</a>';
         htmlContent += '<a href="#" id="delete" data-type="rechnung" data-id="' + id + '" class="btn btn-danger"><i class="icon-trash icon-white"></i> Löschen</a>';
         htmlContent += '<hr /><a href="#" data-id="' + id + '" data-type="rechnung" id="refreshPDF" class="btn"><i class="icon-refresh"></i> PDF neu erstellen</a>';
         $('#rechnungModal .modal-body .buttons').html(htmlContent);
@@ -942,4 +944,54 @@ $(document).ready(function() {
     };
     countLines('', $('#log span'));
     countLines('error', $('#errorLog span'));
+    /* Zahlungserinnerung */
+    var generateZahlungserinnerung = function(id, level) {
+        var normal = function(id) {
+            $.ajax({
+                url: 'php/ajax/createPDFzahlungserinnerung.php',
+                type: 'POST',
+                data: 'id=' + id + '&level=' + level
+            });
+        };
+        var print = function() {
+            $.ajax({
+                url: 'php/ajax/createPDFzahlungserinnerung_print.php',
+                type: 'POST',
+                data: 'id=' + id + '&level=' + level
+            });
+        };
+        $.when(
+            normal(id),
+            print(id)
+        ).done(function(){
+            $('.progress .bar').parent().addClass('progress-success');
+            $('.progress .bar').parent().removeClass('active');
+            $('.progress .bar').css('width', '100%');
+            var modalBody = $('#zahlungserinnerungModal .modal-body');
+            modalBody
+                .find('.info-pdf')
+                .showSuccessMessage('Dokument erfolgreich erstellt!<br /><a href="export/rechnung/z' + id + '.pdf" target="_blank">öffnen</a>');
+            modalBody
+                .find('.info-pdfprint')
+                .showSuccessMessage('Druckversion erfolgreich erstellt!<br /><a href="export/rechnung/print/z' + id + '.pdf" target="_blank">öffnen</a>');
+        });
+    };
+    $('body').on('click', '.zahlungserinnerung', function() {
+        var level = $(this).data('level');
+        var id = $(this).data('id');
+        $('#rechnungModal').modal('hide');
+
+        /*  Progressbar erstellen   */
+        content = '<h4>Fortschritt</h4><div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>';
+        content += '<div class="info-pdf"></div>';
+        content += '<div class="info-pdfprint"></div>';
+
+        $('#zahlungserinnerungModal .modal-body').html(content);
+
+        $('#zahlungserinnerungModal').modal('show');
+
+        $('#zahlungserinnerungModal').on('shown', function() {
+            generateZahlungserinnerung(id, level);
+        });
+    });
 });

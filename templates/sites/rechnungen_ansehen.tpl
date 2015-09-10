@@ -14,3 +14,4 @@
   	</div>
   </div>
 </div>
+{include file="inc/modal.tpl" name="zahlungserinnerung" title="Zahlungserinnerung erstellen"}

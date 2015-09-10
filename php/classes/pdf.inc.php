@@ -2,6 +2,8 @@
 
 class pdf extends fpdf\FPDF
 {
+    public $belegTitel = false;
+    public $abschlussSatz = false;
     public $printversion = false;
     public $angebot = false;
     public $posY = 130;
@@ -35,6 +37,8 @@ class pdf extends fpdf\FPDF
     /* Kundeninformationen laden */
         $this->kundendaten = $this->getKundendaten();
 
+        $this->setAbschlussSatz();
+
         parent::__construct('P', 'mm', 'A4');
 
         $this->SetDisplayMode(100);
@@ -62,6 +66,9 @@ class pdf extends fpdf\FPDF
         }
 
         $this->Endpreis();
+    }
+    protected function setAbschlussSatz()
+    {
     }
     public function getEinstellungen()
     {
@@ -266,10 +273,14 @@ class pdf extends fpdf\FPDF
             $this->SetXY($this->einstellungen['rechnung_abstand_links'], $this->einstellungen['rechnung_abstand_oben'] + 4);
         }
         if ($rechnung_anzeigen === true) {
-            if ($this->angebot === false) {
-                $this->Cell(90, 10, iconv('UTF-8', 'CP1252', 'Rechnung'));
+            if ($this->belegTitel) {
+                $this->Cell(90, 10, iconv('UTF-8', 'CP1252', $this->belegTitel));
             } else {
-                $this->Cell(90, 10, iconv('UTF-8', 'CP1252', 'Angebot'));
+                if ($this->angebot === false) {
+                    $this->Cell(90, 10, iconv('UTF-8', 'CP1252', 'Rechnung'));
+                } else {
+                    $this->Cell(90, 10, iconv('UTF-8', 'CP1252', 'Angebot'));
+                }
             }
         }
     /*  Daten unter "Rechnung"(oben rechts) */
@@ -697,10 +708,14 @@ class pdf extends fpdf\FPDF
         $this->SetTextColor(000, 000, 000);
         $this->posY += 10;
         $this->SetXY(30, $this->posY);
-        if ($this->angebot === false) {
-            $this->MultiCell(160, 5, iconv('UTF-8', 'CP1252', 'Ich bedanke mich für den Auftrag und wünsche mir auch weiterhin eine gute Zusammenarbeit'), 0, 'C');
+        if ($this->abschlussSatz) {
+            $this->MultiCell(160, 5, iconv('UTF-8', 'CP1252', $this->abschlussSatz), 0, 'C');
         } else {
-            $this->MultiCell(160, 5, iconv('UTF-8', 'CP1252', 'Ich hoffe, dass Ihnen mein Angebot zusagt.'), 0, 'C');
+            if ($this->angebot === false) {
+                $this->MultiCell(160, 5, iconv('UTF-8', 'CP1252', 'Ich bedanke mich für den Auftrag und wünsche mir auch weiterhin eine gute Zusammenarbeit'), 0, 'C');
+            } else {
+                $this->MultiCell(160, 5, iconv('UTF-8', 'CP1252', 'Ich hoffe, dass Ihnen mein Angebot zusagt.'), 0, 'C');
+            }
         }
         $this->posY += 10;
 

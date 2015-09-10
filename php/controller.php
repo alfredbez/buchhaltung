@@ -12,6 +12,8 @@ include_once DIR_CLASSES.'forms.inc.php';    //	Formularklassen (Rechnungs und A
 include_once DIR_CLASSES.'pdf.inc.php';        //	pdf-Klassen
 
 /* PDF-Klassen einbinden */
+include_once DIR_CLASSES.'zahlungserinnerung.inc.php';
+include_once DIR_CLASSES.'zahlungserinnerung_print.inc.php';
 include_once DIR_CLASSES.'rechnung.inc.php';
 include_once DIR_CLASSES.'rechnung_print.inc.php';
 include_once DIR_CLASSES.'angebot.inc.php';
