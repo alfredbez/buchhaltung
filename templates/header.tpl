@@ -33,10 +33,15 @@
 						<li><a href="index.php?site={$s.file}">{$s.name|replace:"_":" "|ucfirst}</a></li>
 						{/if}
 						{/foreach}
+						<li class="admin-tools dropdown">
+							<a href="#" id="dropdown-admin-tools" class="dropdown-toggle" data-toggle="dropdown">Admin Tools <b class="caret"></b></a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-admin-tools">
+						    	<li><a href="#" id="clearCache"><i class="icon-trash"></i> <span>Cache leeren</span></a></li>
+						    	<li><a href="log" id="log" target="_blank"><i class="icon-eye-open"></i> <span>Log anzeigen</span></a></li>
+						    	<li><a href="php_error_log" id="errorLog" target="_blank"><i class="icon-eye-open"></i> <span>Error-Log anzeigen</span></a></li>
+						    </ul>
+						</li>
 					</ul>
-					<form class="navbar-form pull-right">
-					  <button type="button" id="clearCache" class="btn"><i class="icon-trash"></i> <span>Cache leeren</span></button>
-					</form>
 				</div>
 			</div>
 		</div>

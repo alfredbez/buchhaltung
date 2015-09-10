@@ -931,4 +931,18 @@ $(document).ready(function() {
         });
         return false;
     });
+    /* Logs */
+    var countLines = function(type, el) {
+        $.ajax({
+            url: 'php/ajax/checkLog.php?type=' + type,
+            success: function(countLines){
+                console.log(countLines);
+                console.log(el);
+                var text = el.text();
+                el.text(text + ' (' + countLines + ')');
+            }
+        });
+    };
+    countLines('', $('#log span'));
+    countLines('error', $('#errorLog span'));
 });

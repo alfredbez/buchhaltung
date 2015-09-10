@@ -4,7 +4,9 @@
 /*	Klassen einbinden
 /*	eventuell mit Autoload ersetzen...
 /**/
-include_once DIR_CLASSES.'mysql.inc.php';    //	Mysql-Klasse
+include_once DIR_CLASSES.'Logger.inc.php';   //	Logger-Klasse
+$log = new Logger();
+include_once DIR_CLASSES.'mysql.inc.php';    // Mysql-Klasse
 include_once DIR_CLASSES.'table.inc.php';    //	Tabellenklasse
 include_once DIR_CLASSES.'forms.inc.php';    //	Formularklassen (Rechnungs und Angebotsformulare)
 include_once DIR_CLASSES.'pdf.inc.php';        //	pdf-Klassen
